@@ -3,7 +3,7 @@ import LayoutDefault from "../layouts/LayoutDefault.astro";
 
 import { getCollection } from "astro:content";
 
-const posts = await getCollection("blogs");
+const posts = (await getCollection("blogs")).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
 const title = "Blogs";
 const description = "My Description";
@@ -12,13 +12,36 @@ const image = "../images/favicon.svg";
 
 <LayoutDefault title={title} description={description} image={image}>
 	<h1>My posts</h1>
-	<ul>
+	<ul class="blogs" role="list">
 		{
 			posts.map((post) => (
 				<li>
+					<img src={post.data.image.url} alt={post.data.image.alt} />
 					<a href={`/blogs/${post.id}`}>{post.data.title}</a>
 				</li>
 			))
 		}
 	</ul>
 </LayoutDefault>
+
+<style>
+	.blogs {
+		display: grid;
+		grid: auto / repeat(auto-fill, minmax(min(300px, 100%), 1fr));
+		gap: 2em;
+
+		li {
+			position: relative;
+		}
+
+		a::after {
+			content: "";
+			position: absolute;
+			inset: 0;
+		}
+
+		img {
+			aspect-ratio: 16 / 9;
+		}
+	}
+</style>
