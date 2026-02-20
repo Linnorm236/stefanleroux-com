@@ -1,0 +1,71 @@
+---
+import BlockHead from "../blocks/BlockHead.astro";
+
+const { pathname } = Astro.url;
+
+const { title, description, image = "favicon.svg" } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<BlockHead title={title} description={description} image={image} />
+	<body>
+		<nav>
+			<div class="sticky">
+				<img class="profile" src="" alt="profile" />
+				<ul role="list">
+					<li><a aria-current={pathname === "/" ? "page" : "false"} href="/">Home</a></li>
+					<li><a aria-current={pathname === "/about/" ? "page" : "false"} href="/about/">About</a></li>
+					<li><a aria-current={pathname === "/blogs/" ? "page" : "false"} href="/blogs/">Blogs</a></li>
+				</ul>
+			</div>
+		</nav>
+		<main>
+			<slot />
+		</main>
+		<footer>test</footer>
+	</body>
+</html>
+
+<style>
+	body {
+		min-block-size: 100svh;
+		display: grid;
+		grid:
+			"nav head" auto
+			"nav main" 1fr
+			"nav foo" auto / 200px 1fr;
+
+		nav {
+			grid-area: nav;
+		}
+
+		main {
+			grid-area: main;
+		}
+
+		footer {
+			grid-area: foo;
+		}
+
+		@media (width <= 800px) {
+			& {
+				grid-template-columns: minmax(0, 0) minmax(min(100%, 300px), 100%);
+			}
+		}
+	}
+
+	nav {
+		.sticky {
+			position: sticky;
+			inset: 0 auto auto auto;
+		}
+
+		.profile {
+			aspect-ratio: 1;
+			width: 80%;
+			border-radius: 50%;
+			background: lightblue;
+		}
+	}
+</style>
