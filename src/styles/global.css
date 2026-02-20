@@ -29,11 +29,11 @@
 		font: inherit;
 	}
 
-	:is(h1, h2, h3, h4, h5, h6, p, ul, ol, blockquote, pre, table, form, details):not(:where(:last-child)) {
+	:is(h1, h2, h3, h4, h5, h6, p, ul, ol, blockquote, pre, table, form, details, img):not(:where(:last-child)) {
 		margin-block-end: 2rem;
 	}
 
-	:is(p, ul, ol, blockquote, pre, table, form, details):has(+ :is(h1, h2, h3, h4, h5, h6)) {
+	:is(p, ul, ol, blockquote, pre, table, form, details, img):has(+ :is(h1, h2, h3, h4, h5, h6)) {
 		margin-block-end: 4rem;
 	}
 
@@ -67,11 +67,9 @@
 		block-size: auto;
 	}
 
-	img:empty {
+	img[alt] {
 		place-content: center;
 		text-align: center;
-		padding: 2em;
-		background: lightgrey;
 	}
 
 	svg * {
