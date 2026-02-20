@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://stefanleroux-com/sitemap-index.xml
+Sitemap: https://stefanleroux.com/sitemap-index.xml
