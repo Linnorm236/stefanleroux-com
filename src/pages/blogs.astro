@@ -2,6 +2,7 @@
 import LayoutDefault from "../layouts/LayoutDefault.astro";
 
 import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
 
 const posts = (await getCollection("blogs")).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
@@ -16,7 +17,7 @@ const image = "../images/favicon.svg";
 		{
 			posts.map((post) => (
 				<li>
-					<img src={post.data.image.url} alt={post.data.image.alt} />
+					<Image src={post.data.image as any} alt={post.data.alt} />
 					<a href={`/blogs/${post.id}/`}>{post.data.title}</a>
 				</li>
 			))
@@ -41,6 +42,7 @@ const image = "../images/favicon.svg";
 		}
 
 		img {
+			inline-size: 100%;
 			aspect-ratio: 16 / 9;
 		}
 	}
