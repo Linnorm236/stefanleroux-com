@@ -17,7 +17,7 @@ const image = "../images/favicon.svg";
 		{
 			posts.map((post) => (
 				<li>
-					<Image src={post.data.image as any} alt={post.data.alt} />
+					<Image src={post.data.image as any} format="avif" layout="constrained" alt={post.data.alt} />
 					<a href={`/blogs/${post.id}/`}>{post.data.title}</a>
 				</li>
 			))

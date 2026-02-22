@@ -7,7 +7,7 @@ const { frontmatter } = Astro.props;
 ---
 
 <LayoutDefault title={frontmatter.title} description={frontmatter.description} image={frontmatter.image?.src}>
-	<Image src={frontmatter.image} format="avif" alt={frontmatter.alt} />
+	<Image src={frontmatter.image} format="avif" layout="constrained" alt={frontmatter.alt} />
 	<time class="block" datetime={frontmatter.pubDate.toISOString().split("T")[0]}>
 		{frontmatter.pubDate.toISOString().split("T")[0]}
 	</time>
