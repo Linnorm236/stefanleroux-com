@@ -2,7 +2,7 @@
 
 @layer reset {
 	:root {
-		color-scheme: light;
+		color-scheme: dark;
 		overflow-y: scroll;
 		scroll-behavior: smooth;
 		scrollbar-width: thin;
@@ -11,39 +11,21 @@
 		interpolate-size: allow-keywords;
 	}
 
-	*,
-	*::before,
-	*::after {
+	:where(*, *::before, *::after) {
 		box-sizing: border-box;
 		margin: 0;
 	}
 
-	body {
-		font-size: 2rem;
-	}
-
-	input,
-	select,
-	textarea,
-	button {
+	:where(input, select, textarea, button) {
 		font: inherit;
 	}
 
-	:is(h1, h2, h3, h4, h5, h6, p, ul, ol, blockquote, pre, table, form, details, img):not(:where(:last-child)) {
-		margin-block-end: 2rem;
-	}
-
-	:is(p, ul, ol, blockquote, pre, table, form, details, img):has(+ :is(h1, h2, h3, h4, h5, h6)) {
-		margin-block-end: 4rem;
-	}
-
-	a {
+	:where(a) {
 		text-decoration: none;
 		color: currentColor;
 	}
 
-	ul,
-	ol {
+	:where(ul, ol) {
 		padding-inline-start: 3rem;
 
 		&[role="list"] {
@@ -56,29 +38,33 @@
 		}
 	}
 
-	img,
-	picture,
-	figure,
-	iframe,
-	video,
-	svg {
+	:where(img, picture, figure, iframe, video, svg) {
 		display: block;
 		max-inline-size: 100%;
 		block-size: auto;
 	}
 
-	img[alt] {
+	:where(img[alt]) {
 		place-content: center;
 		text-align: center;
 	}
 
-	svg * {
+	:where(svg *) {
 		transform-box: fill-box;
 		transform-origin: center;
 	}
 
-	[popover] {
+	:where([popover]) {
 		margin: auto;
+	}
+
+	:where(h1, h2, h3, h4, h5, h6) {
+		text-box: trim-both cap alphabetic;
+		text-wrap: balance;
+	}
+
+	:where(p) {
+		text-wrap: pretty;
 	}
 
 	@media (prefers-reduced-motion: no-preference) {
@@ -90,11 +76,41 @@
 
 @layer theme {
 	:root {
-		--c-blu: oklch(0.546 0.245 262.881);
+		--c-blu: oklch(0.5 0.0964 242.46);
 		--c-grn: oklch(0.711 0.2407 142.57);
-		--c-yel: oklch(0.8834 0.1777 106.37);
+		--c-yel: oklch(1 0.04 100);
 		--c-red: oklch(0.5988 0.2442 27.71);
-		--c-blk: oklch(0 0 0);
+		--c-blk: oklch(0.2162 0.0241 273.38);
 		--c-wht: oklch(1 0 0);
+
+		--fs-0: clamp(1.28rem, 0.17vi + 1.21rem, 1.43rem);
+		--fs-1: clamp(1.6rem, 0.34vi + 1.46rem, 1.9rem);
+		--fs-2: clamp(2rem, 0.61vi + 1.76rem, 2.53rem);
+		--fs-3: clamp(2.5rem, 1vi + 2.1rem, 3.38rem);
+		--fs-4: clamp(3.13rem, 1.56vi + 2.5rem, 4.5rem);
+		--fs-5: clamp(3.91rem, 2.38vi + 2.96rem, 6rem);
+		--fs-6: clamp(4.88rem, 3.54vi + 3.47rem, 8rem);
+	}
+
+	body {
+		font-size: var(--fs-1);
+		background: var(--c-blk);
+	}
+
+	section {
+		padding-block: 2em;
+		padding-inline: 1.5em;
+
+		> header {
+			margin-block-end: 1.5em;
+		}
+
+		> *:not(:where(:last-child)) {
+			margin-block-end: 1em;
+		}
+
+		> *:has(+ :is(h1, h2, h3, h4, h5, h6)) {
+			margin-block-end: 2.5em;
+		}
 	}
 }

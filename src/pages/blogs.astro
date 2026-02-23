@@ -12,38 +12,148 @@ const image = "../images/favicon.svg";
 ---
 
 <LayoutDefault title={title} description={description} image={image}>
-	<h1>My posts</h1>
-	<ul class="blogs" role="list">
-		{
-			posts.map((post) => (
-				<li>
-					<Image src={post.data.image as any} format="avif" layout="constrained" alt={post.data.alt} />
-					<a href={`/blogs/${post.id}/`}>{post.data.title}</a>
-				</li>
-			))
-		}
-	</ul>
+	<section>
+		<h1>My posts</h1>
+		<ul class="blogs" role="list">
+			{
+				posts.map((post) => (
+					<li>
+						<article>
+							<Image src={post.data.image as any} format="avif" layout="constrained" alt={post.data.alt} />
+							<h2>
+								<a href={`/blogs/${post.id}/`}>{post.data.title}</a>
+							</h2>
+							<p>{post.data.description}</p>
+						</article>
+					</li>
+				))
+			}
+		</ul>
+	</section>
 </LayoutDefault>
 
 <style>
+	@property --angle {
+		syntax: "<angle>";
+		inherits: true;
+		initial-value: 45deg;
+	}
+
 	.blogs {
+		--radius: 0em;
+		--padding: 1.25em;
+		--timing: 0.3s;
+		--easing: cubic-bezier(0.8, -0.4, 0.5, 1);
 		display: grid;
-		grid: auto / repeat(auto-fill, minmax(min(300px, 100%), 1fr));
-		gap: 2em;
+		grid: auto / repeat(auto-fill, minmax(min(256px, 100%), 1fr));
+		gap: 1.5em;
+	}
 
-		li {
-			position: relative;
-		}
+	li {
+		position: relative;
+		transition: all var(--timing) var(--easing);
 
-		a::after {
+		&::before {
 			content: "";
 			position: absolute;
 			inset: 0;
+			border-radius: var(--radius);
+			background: var(--c-yel);
+			translate: 0.35em 0.25em;
+			filter: blur(0px);
+			transition:
+				translate var(--timing) var(--easing),
+				scale var(--timing) var(--easing),
+				filter var(--timing) var(--easing);
+		}
+
+		&:has(a:hover) {
+			scale: 1.025;
+
+			&::before {
+				translate: 0 0;
+				scale: 1.025 0.95;
+			}
+
+			& ~ li {
+				opacity: 0.5;
+				scale: 0.95;
+				filter: blur(2px);
+			}
+		}
+
+		&:has(~ li a:hover) {
+			opacity: 0.5;
+			scale: 0.95;
+			filter: blur(2px);
+		}
+	}
+
+	article {
+		block-size: 100%;
+		display: flex;
+		flex-flow: column;
+		gap: 1em;
+		padding: var(--padding);
+		background: var(--c-blu);
+		border-radius: var(--radius);
+		isolation: isolate;
+		color: var(--c-wht);
+
+		h2 {
+			font-size: var(--fs-2);
+
+			a::before {
+				content: "";
+				position: absolute;
+				inset: 0;
+				z-index: 1;
+			}
 		}
 
 		img {
 			inline-size: 100%;
-			aspect-ratio: 16 / 9;
+			aspect-ratio: 16 / 10;
+			object-fit: cover;
+			border-radius: calc(var(--radius) - (var(--padding) / 1.5));
+			transition: scale 0.2s var(--easing);
+			transform-origin: 50% 100%;
+		}
+
+		p {
+			display: -webkit-box;
+			-webkit-box-orient: vertical;
+			-webkit-line-clamp: 3;
+			overflow: hidden;
+			font-size: var(--fs-0);
+			flex-grow: 1;
+			mask: linear-gradient(to bottom, white 50%, transparent);
+		}
+
+		&::after {
+			content: "Read More";
+			border: solid 0.125em transparent;
+			border-radius: calc(var(--radius) - (var(--padding) / 2));
+			padding-inline: 0.75em;
+			padding-block: 0.35em;
+			text-align: center;
+			background:
+				linear-gradient(var(--c-blk)) padding-box,
+				conic-gradient(
+						from var(--angle) at center,
+						var(--c-yel) 10%,
+						transparent 20%,
+						transparent 80%,
+						var(--c-yel) 90%
+					)
+					border-box;
+			transition: --angle var(--timing) var(--easing);
+		}
+
+		&:has(a:hover) {
+			&::after {
+				--angle: 225deg;
+			}
 		}
 	}
 </style>
