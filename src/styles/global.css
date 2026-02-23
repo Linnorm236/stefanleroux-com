@@ -60,6 +60,9 @@
 
 	:where(h1, h2, h3, h4, h5, h6) {
 		text-box: trim-both cap alphabetic;
+	}
+
+	:where(h1) {
 		text-wrap: balance;
 	}
 
