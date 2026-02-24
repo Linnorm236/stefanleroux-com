@@ -97,23 +97,13 @@
 
 	body {
 		font-size: var(--fs-1);
+		font-family: system-ui;
 		background: var(--c-blk);
 	}
 
-	section {
-		padding-block: 2em;
-		padding-inline: 1.5em;
-
-		> header {
-			margin-block-end: 1.5em;
-		}
-
-		> *:not(:where(:last-child)) {
-			margin-block-end: 1em;
-		}
-
-		> *:has(+ :is(h1, h2, h3, h4, h5, h6)) {
-			margin-block-end: 2.5em;
-		}
+	@font-face {
+		font-family: Sovngarde;
+		src: url("/fonts/sovngarde.woff2") format("woff2");
+		font-display: swap;
 	}
 }
