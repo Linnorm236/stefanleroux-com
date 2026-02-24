@@ -78,6 +78,12 @@
 }
 
 @layer theme {
+	@font-face {
+		font-family: Patrick;
+		src: url("/fonts/patrick.woff2") format("woff2");
+		font-display: swap;
+	}
+
 	:root {
 		--c-blu: oklch(0.5 0.0964 242.46);
 		--c-grn: oklch(0.711 0.2407 142.57);
@@ -96,14 +102,17 @@
 	}
 
 	body {
-		font-size: var(--fs-1);
-		font-family: system-ui;
-		background: var(--c-blk);
-	}
-
-	@font-face {
-		font-family: Sovngarde;
-		src: url("/fonts/sovngarde.woff2") format("woff2");
-		font-display: swap;
+		--gradSize: 60px;
+		--gradColor:
+			color-mix(in oklch, var(--c-blu), transparent 95%) 0px, color-mix(in oklch, var(--c-blu), transparent 95%) 2px,
+			transparent 2px, transparent var(--gradSize);
+		background:
+			linear-gradient(90deg, var(--gradColor)) calc(50% - (var(--gradSize) / 2)) 50% / var(--gradSize) auto fixed,
+			repeating-linear-gradient(30deg, var(--gradColor)) 50% 50% / cover fixed,
+			repeating-linear-gradient(-30deg, var(--gradColor)) 50% 50% / cover fixed,
+			var(--c-blk);
+		font-size: var(--fs-2);
+		font-family: Patrick, system-ui;
+		color: light-dark(#222, #d0d0d0);
 	}
 }
