@@ -98,24 +98,6 @@ const { title, description, image = "favicon.svg" } = Astro.props;
 	}
 
 	main {
-		background:
-			repeating-linear-gradient(
-					30deg,
-					color-mix(in oklch, var(--c-blu), transparent 95%) 0px,
-					color-mix(in oklch, var(--c-blu), transparent 95%) 2px,
-					transparent 2px,
-					transparent 50px
-				)
-				center / cover fixed,
-			repeating-linear-gradient(
-					-30deg,
-					color-mix(in oklch, var(--c-blu), transparent 95%) 0px,
-					color-mix(in oklch, var(--c-blu), transparent 95%) 2px,
-					transparent 2px,
-					transparent 50px
-				)
-				center / cover fixed;
-
 		> * {
 			width: min(1200px, 100%);
 			margin-inline: auto;
