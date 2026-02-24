@@ -11,7 +11,11 @@ const { title, description, image = "favicon.svg" } = Astro.props;
 	<BlockHead title={title} description={description} image={image} />
 	<body>
 		<input type="checkbox" id="menu" />
+
 		<nav>
+			<div class="hamburger">
+				<label for="menu">Menu</label>
+			</div>
 			<div class="sticky">
 				<div class="links">
 					<div class="profile">
@@ -22,9 +26,6 @@ const { title, description, image = "favicon.svg" } = Astro.props;
 						<li><a aria-current={pathname === "/about/" ? "page" : "false"} href="/about/">About</a></li>
 						<li><a aria-current={pathname === "/blogs/" ? "page" : "false"} href="/blogs/">Blogs</a></li>
 					</ul>
-				</div>
-				<div class="hamburger">
-					<label for="menu">Menu</label>
 				</div>
 			</div>
 		</nav>
@@ -97,6 +98,24 @@ const { title, description, image = "favicon.svg" } = Astro.props;
 	}
 
 	main {
+		background:
+			repeating-linear-gradient(
+					30deg,
+					color-mix(in oklch, var(--c-blu), transparent 95%) 0px,
+					color-mix(in oklch, var(--c-blu), transparent 95%) 2px,
+					transparent 2px,
+					transparent 50px
+				)
+				center / cover fixed,
+			repeating-linear-gradient(
+					-30deg,
+					color-mix(in oklch, var(--c-blu), transparent 95%) 0px,
+					color-mix(in oklch, var(--c-blu), transparent 95%) 2px,
+					transparent 2px,
+					transparent 50px
+				)
+				center / cover fixed;
+
 		> * {
 			width: min(1200px, 100%);
 			margin-inline: auto;
@@ -105,31 +124,78 @@ const { title, description, image = "favicon.svg" } = Astro.props;
 
 	nav {
 		background: var(--c-blu);
-		border-right: solid 3px var(--c-yel);
 		position: relative;
 		z-index: 1;
+		isolation: isolate;
+
+		.sticky {
+			position: sticky;
+			inset: 0 0 0 auto;
+			height: 100dvh;
+			background: var(--c-blu);
+		}
+
+		.links {
+			display: grid;
+			gap: 1em;
+			overflow-x: clip;
+			padding-block: 1em;
+
+			ul {
+				display: grid;
+				gap: 1rem;
+				padding-inline: 1rem;
+			}
+
+			a {
+				display: block;
+				padding-inline: 1em;
+				padding-block: 0.75em;
+				background: var(--c-blk);
+
+				&[aria-current="page"] {
+					background: red;
+				}
+			}
+		}
+
+		.profile {
+			padding-inline: 1em;
+			width: 250px;
+
+			> img {
+				width: 100%;
+				margin-inline: auto;
+				aspect-ratio: 1;
+				object-fit: cover;
+				background: lightblue;
+				border-radius: 50%;
+			}
+		}
 
 		.hamburger {
 			display: none;
-			position: absolute;
-			inset: auto 0 0 auto;
-			translate: 100% 0%;
+			position: fixed;
+			inset: auto auto 0 0;
 			aspect-ratio: 1;
-			width: 100px;
-			z-index: 1;
+			width: 80px;
+			z-index: -1;
+			translate: 0.5em -0.5em;
 
 			label {
-				display: block;
 				block-size: 100%;
 				inline-size: 100%;
 				background: var(--c-blu);
 				border: solid 3px var(--c-yel);
 				border-left: unset;
 				border-bottom: unset;
+				border-radius: 50%;
+				display: grid;
+				place-items: center;
 
 				&::before {
-					display: none;
 					content: "";
+					display: none;
 					position: fixed;
 					inset: auto auto 0 0;
 					inline-size: 100vw;
@@ -144,37 +210,8 @@ const { title, description, image = "favicon.svg" } = Astro.props;
 				}
 			}
 
-			body:has(input:checked) & label::before {
+			body:has(> input:checked) & label::before {
 				display: block;
-			}
-		}
-
-		.sticky {
-			position: sticky;
-			inset: 0 0 0 auto;
-			height: 100lvh;
-		}
-
-		.links {
-			display: grid;
-			overflow-x: clip;
-
-			ul {
-				padding-inline: 1em;
-			}
-		}
-
-		.profile {
-			padding: 1em;
-			width: 250px;
-
-			> img {
-				width: 100%;
-				margin-inline: auto;
-				aspect-ratio: 1;
-				object-fit: cover;
-				background: lightblue;
-				border-radius: 50%;
 			}
 		}
 	}
