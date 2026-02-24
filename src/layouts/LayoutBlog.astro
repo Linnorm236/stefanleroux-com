@@ -10,9 +10,13 @@ const { frontmatter } = Astro.props;
 	<article class="blog">
 		<header>
 			<Image src={frontmatter.image} alt={frontmatter.alt} format="avif" layout="constrained" priority />
-			<time class="block" datetime={frontmatter.pubDate.toISOString().split("T")[0]}>
-				{frontmatter.pubDate.toISOString().split("T")[0]}
-			</time>
+			<span>
+				Published date:
+				<time class="block" datetime={frontmatter.pubDate.toISOString().split("T")[0]}>
+					{frontmatter.pubDate.toISOString().split("T")[0]}
+				</time>
+			</span>
+
 			<h1>{frontmatter.title}</h1>
 		</header>
 		<slot />
@@ -27,31 +31,69 @@ const { frontmatter } = Astro.props;
 	}
 
 	article {
-		width: min(800px, 100%);
+		width: min(900px, 100%);
 		margin-inline: auto;
-		padding-block: 1.5em;
-		padding-inline: 1.5em;
+		padding-block: 2rem;
+		padding-inline: 2rem;
 
 		> header {
-			margin-block-end: 1.5em;
+			margin-block-end: 2.5em;
 			display: grid;
 			gap: 3rem;
+
+			img {
+				border-radius: 2em;
+				corner-shape: scoop;
+			}
 		}
 
 		> *:not(:where(:last-child)) {
 			margin-block-end: 1em;
 		}
 
-		> *:not(h1, h2, h3, h4, h5, h6):has(+ :is(h1, h2, h3, h4, h5, h6)) {
-			margin-block-end: 2.5em;
+		> *:not(h1, h2, h3, h4, h5, h6):has(+ :is(h1, h2, h3, h4, h5, h6, hr)) {
+			margin-block-end: 2.75em;
 		}
 
 		:is(ul, ol) li:not(:last-child) {
 			margin-block-end: 0.5em;
 		}
 
-		h1 {
+		:is(h1, h2, h3, h4, h5, h6) {
 			text-transform: uppercase;
+			line-height: 1;
+			text-wrap: balance;
+		}
+
+		h1 {
+			font-size: var(--fs-6);
+		}
+		h2 {
+			font-size: var(--fs-5);
+		}
+		h3 {
+			font-size: var(--fs-4);
+		}
+		h4 {
+			font-size: var(--fs-3);
+		}
+
+		header + p {
+			font-size: var(--fs-3);
+		}
+
+		hr {
+			border: unset;
+			border-top: dotted 5px;
+		}
+
+		code {
+			display: inline-block;
+			background: black;
+			border-radius: 0.25em;
+			padding-inline: 0.35em;
+			padding-block: 0.125em;
+			font-size: var(--fs-1);
 		}
 	}
 </style>
