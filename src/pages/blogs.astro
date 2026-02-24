@@ -19,7 +19,12 @@ const image = "../images/favicon.svg";
 				posts.map((post) => (
 					<li>
 						<article>
-							<Image src={post.data.image as any} format="avif" layout="constrained" alt={post.data.alt} />
+							<div>
+								<Image src={post.data.image as any} format="avif" layout="constrained" alt={post.data.alt} />
+								<time datetime={post.data.pubDate.toISOString().split("T")[0]}>
+									{post.data.pubDate.toISOString().split("T")[0]}
+								</time>
+							</div>
 							<h2>
 								<a href={`/blogs/${post.id}/`}>{post.data.title}</a>
 							</h2>
@@ -39,14 +44,20 @@ const image = "../images/favicon.svg";
 		initial-value: 45deg;
 	}
 
+	section {
+		inline-size: min(1200px, 100%);
+		padding-inline: 2rem;
+	}
+
 	.blogs {
-		--radius: 0em;
-		--padding: 1.25em;
+		--radius: 3rem;
+		--padding: 2.25rem;
+		--radiusShape: squircle;
 		--timing: 0.3s;
 		--easing: cubic-bezier(0.8, -0.4, 0.5, 1);
 		display: grid;
 		grid: auto / repeat(auto-fill, minmax(min(256px, 100%), 1fr));
-		gap: 1.5em;
+		gap: 3rem;
 	}
 
 	li {
@@ -58,8 +69,9 @@ const image = "../images/favicon.svg";
 			position: absolute;
 			inset: 0;
 			border-radius: var(--radius);
+			corner-shape: var(--radiusShape);
 			background: var(--c-yel);
-			translate: 0.35em 0.25em;
+			translate: 0.35rem 0.25rem;
 			filter: blur(0px);
 			transition:
 				translate var(--timing) var(--easing),
@@ -93,10 +105,11 @@ const image = "../images/favicon.svg";
 		block-size: 100%;
 		display: flex;
 		flex-flow: column;
-		gap: 1em;
+		gap: 2rem;
 		padding: var(--padding);
 		background: var(--c-blu);
 		border-radius: var(--radius);
+		corner-shape: var(--radiusShape);
 		isolation: isolate;
 		color: var(--c-wht);
 
@@ -121,6 +134,18 @@ const image = "../images/favicon.svg";
 			transform-origin: 50% 100%;
 		}
 
+		time {
+			display: block;
+			padding-inline: 0.5em;
+			padding-block: 0.35em;
+			background-color: #000000b0;
+			backdrop-filter: blur(5px);
+			border-radius: calc(var(--radius) - (var(--padding) / 1.5));
+			position: absolute;
+			inset: var(--padding) var(--padding) auto auto;
+			font-size: var(--fs-1);
+		}
+
 		p {
 			display: -webkit-box;
 			-webkit-box-orient: vertical;
@@ -133,8 +158,9 @@ const image = "../images/favicon.svg";
 
 		&::after {
 			content: "Read More";
-			border: solid 0.125em transparent;
+			border: solid 0.25rem transparent;
 			border-radius: calc(var(--radius) - (var(--padding) / 2));
+			corner-shape: var(--radiusShape);
 			padding-inline: 0.75em;
 			padding-block: 0.35em;
 			text-align: center;
