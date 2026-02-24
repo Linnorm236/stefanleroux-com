@@ -81,7 +81,7 @@
 	@font-face {
 		font-family: Patrick;
 		src: url("/fonts/patrick.woff2") format("woff2");
-		font-display: swap;
+		font-display: fallback;
 	}
 
 	:root {
