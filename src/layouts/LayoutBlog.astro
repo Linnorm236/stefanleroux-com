@@ -15,7 +15,6 @@ const { frontmatter } = Astro.props;
 			</time>
 			<h1>{frontmatter.title}</h1>
 		</header>
-		<hr />
 		<slot />
 	</article>
 </LayoutDefault>
@@ -35,19 +34,24 @@ const { frontmatter } = Astro.props;
 
 		> header {
 			margin-block-end: 1.5em;
+			display: grid;
+			gap: 3rem;
 		}
 
 		> *:not(:where(:last-child)) {
 			margin-block-end: 1em;
 		}
 
-		> *:has(+ :is(h1, h2, h3, h4, h5, h6)) {
+		> *:not(h1, h2, h3, h4, h5, h6):has(+ :is(h1, h2, h3, h4, h5, h6)) {
 			margin-block-end: 2.5em;
 		}
-	}
 
-	header {
-		display: grid;
-		gap: 3rem;
+		:is(ul, ol) li:not(:last-child) {
+			margin-block-end: 0.5em;
+		}
+
+		h1 {
+			text-transform: uppercase;
+		}
 	}
 </style>
