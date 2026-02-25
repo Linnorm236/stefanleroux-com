@@ -45,6 +45,7 @@ const image = "../images/favicon.svg";
 				Crafting HTML email signatures that render across Outlook, Gmail, Apple Mail, and the rest of the inbox zoo.
 			</li>
 		</ul>
+		<hr />
 		<h2>Technical Toolbox</h2>
 		<h3>Frameworks & CMS</h3>
 		<ul class="clients" role="list">
@@ -67,6 +68,7 @@ const image = "../images/favicon.svg";
 			<li>GIMP</li>
 			<li>Inkscape</li>
 		</ul>
+		<hr />
 		<h2>Websites I was responible for building</h2>
 		<h3>The UXI Artisan Group</h3>
 		<ul role="list" class="clients">
@@ -100,6 +102,7 @@ const image = "../images/favicon.svg";
 		</ul>
 		<h3>And some others</h3>
 		<ul role="list" class="clients">
+			<li><a href="https://juffroulinky.com/" target="_blank">Juffrou Linky</a></li>
 			<li><a href="https://acumengroup.co.za/" target="_blank">Acumen Group</a></li>
 			<li><a href="https://chinatownsa.co.za/" target="_blank">China Town</a></li>
 			<li><a href="https://educationcover.co.za/" target="_blank">Education Cover</a></li>
@@ -157,7 +160,7 @@ const image = "../images/favicon.svg";
 			margin-block-end: 2.75em;
 		}
 
-		:is(ul, ol) li:not(:last-child) {
+		:is(ul, ol):not([role="list"]) li:not(:last-child) {
 			margin-block-end: 0.5em;
 		}
 
