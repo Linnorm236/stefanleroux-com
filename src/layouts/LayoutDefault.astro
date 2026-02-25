@@ -10,7 +10,7 @@ const { title, description, image = "favicon.svg" } = Astro.props;
 <html lang="en">
 	<BlockHead title={title} description={description} image={image} />
 	<body>
-		<input type="checkbox" id="menu" />
+		<input type="checkbox" name="menu" id="menu" />
 
 		<nav>
 			<div class="hamburger">
@@ -38,6 +38,7 @@ const { title, description, image = "favicon.svg" } = Astro.props;
 
 <style>
 	body {
+		--screenSize: 900px;
 		--timing: 0.5s;
 		--easing: cubic-bezier(0.8, -0.4, 0.5, 1);
 		min-block-size: 100svh;
@@ -47,26 +48,27 @@ const { title, description, image = "favicon.svg" } = Astro.props;
 			"nav main" 1fr
 			"nav foo" auto / minmax(0, 250px) minmax(0, 1fr);
 
-		nav {
+		& > nav {
 			grid-area: nav;
 		}
 
-		main {
+		& > main {
 			grid-area: main;
 		}
 
-		footer {
+		& > footer {
 			grid-area: foo;
 		}
 
-		& > input {
+		& > input#menu {
+			display: none;
 			position: fixed;
 			width: 0;
 			height: 0;
 			opacity: 0;
 		}
 
-		@media (width <= 800px) {
+		@media (width <= 900px) {
 			& {
 				overflow-x: clip;
 				grid-template-columns: minmax(0, 0) minmax(0, 1fr);
@@ -91,6 +93,10 @@ const { title, description, image = "favicon.svg" } = Astro.props;
 				}
 			}
 
+			& > input#menu {
+				display: block;
+			}
+
 			main {
 				min-width: 100vw;
 			}
@@ -112,8 +118,9 @@ const { title, description, image = "favicon.svg" } = Astro.props;
 
 		.sticky {
 			position: sticky;
-			inset: 0 0 0 auto;
-			height: 100dvh;
+			inset: 0 0 auto auto;
+			height: 100lvh;
+			overflow-y: auto;
 			background: var(--c-blu);
 		}
 
@@ -186,7 +193,7 @@ const { title, description, image = "favicon.svg" } = Astro.props;
 				}
 			}
 
-			@media (width <= 800px) {
+			@media (width <= 900px) {
 				& {
 					display: block;
 				}

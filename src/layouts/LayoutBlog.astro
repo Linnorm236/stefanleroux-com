@@ -10,26 +10,21 @@ const { frontmatter } = Astro.props;
 	<article class="blog">
 		<header>
 			<Image src={frontmatter.image} alt={frontmatter.alt} format="avif" layout="constrained" priority />
-			<span>
-				Published date:
-				<time class="block" datetime={frontmatter.pubDate.toISOString().split("T")[0]}>
-					{frontmatter.pubDate.toISOString().split("T")[0]}
-				</time>
-			</span>
-
-			<h1>{frontmatter.title}</h1>
+			<hgroup>
+				<h1>{frontmatter.title}</h1>
+				<p>
+					Published:
+					<time class="block" datetime={frontmatter.pubDate.toISOString().split("T")[0]}>
+						{frontmatter.pubDate.toISOString().split("T")[0]}
+					</time>
+				</p>
+			</hgroup>
 		</header>
 		<slot />
 	</article>
 </LayoutDefault>
 
 <style>
-	img {
-		inline-size: 100%;
-		aspect-ratio: 21 / 9;
-		object-fit: cover;
-	}
-
 	article {
 		width: min(900px, 100%);
 		margin-inline: auto;
@@ -39,11 +34,18 @@ const { frontmatter } = Astro.props;
 		> header {
 			margin-block-end: 2.5em;
 			display: grid;
-			gap: 3rem;
+			gap: 2.5em;
 
 			img {
+				inline-size: 100%;
+				aspect-ratio: 16 / 10;
+				object-fit: cover;
 				border-radius: 2em;
 				corner-shape: scoop;
+			}
+
+			p {
+				font-size: var(--fs-3);
 			}
 		}
 
@@ -59,9 +61,13 @@ const { frontmatter } = Astro.props;
 			margin-block-end: 0.5em;
 		}
 
+		li:has(> :is(ol, ul)) :is(ol, ul) {
+			margin-block-start: 0.5em;
+		}
+
 		:is(h1, h2, h3, h4, h5, h6) {
 			text-transform: uppercase;
-			line-height: 1;
+			line-height: 1.1;
 			text-wrap: balance;
 		}
 

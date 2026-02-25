@@ -1,4 +1,4 @@
-@layer reset, theme;
+@layer reset, theme, utils;
 
 @layer reset {
 	:root {
@@ -59,10 +59,6 @@
 	}
 
 	:where(h1, h2, h3, h4, h5, h6) {
-		text-box: trim-both cap alphabetic;
-	}
-
-	:where(h1) {
 		text-wrap: balance;
 	}
 
@@ -85,7 +81,7 @@
 	}
 
 	:root {
-		--c-blu: oklch(0.5 0.0964 242.46);
+		--c-blu: oklch(0.405 0.0964 242.46);
 		--c-grn: oklch(0.711 0.2407 142.57);
 		--c-yel: oklch(1 0.04 100);
 		--c-red: oklch(0.5988 0.2442 27.71);
@@ -104,7 +100,7 @@
 	body {
 		--gradSize: 60px;
 		--gradColor:
-			color-mix(in oklch, var(--c-blu), transparent 95%) 0px, color-mix(in oklch, var(--c-blu), transparent 95%) 2px,
+			color-mix(in oklch, var(--c-blu), transparent 90%) 0px, color-mix(in oklch, var(--c-blu), transparent 90%) 2px,
 			transparent 2px, transparent var(--gradSize);
 		background:
 			linear-gradient(90deg, var(--gradColor)) calc(50% - (var(--gradSize) / 2)) 50% / var(--gradSize) auto fixed,
@@ -113,6 +109,36 @@
 			var(--c-blk);
 		font-size: var(--fs-2);
 		font-family: Patrick, system-ui;
-		color: light-dark(#222, #d0d0d0);
+		color: light-dark(#222, #dddddd);
+	}
+}
+
+@layer utils {
+	.u-b {
+		font-weight: 700;
+	}
+	.u-u {
+		text-transform: uppercase;
+	}
+	.u-i {
+		font-style: italic;
+	}
+	.u-xl {
+		text-align: start;
+	}
+	.u-xr {
+		text-align: end;
+	}
+	.u-xc {
+		text-align: center;
+	}
+	.u-yl {
+		text-align: start;
+	}
+	.u-yr {
+		text-align: end;
+	}
+	.u-yc {
+		text-align: center;
 	}
 }
