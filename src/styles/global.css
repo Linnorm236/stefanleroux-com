@@ -28,7 +28,7 @@
 	:where(ul, ol) {
 		padding-inline-start: 3rem;
 
-		&[role="list"] {
+		&:is([role="list"], [role="menu"]) {
 			list-style: none;
 			padding: 0;
 

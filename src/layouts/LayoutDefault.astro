@@ -11,7 +11,13 @@ const { title, description, image = "favicon.svg" } = Astro.props;
 <html lang="en">
 	<Meta title={title} description={description} image={image} />
 	<body>
-		<label for="menu" class="icon_application-menu">
+		<label
+			for="menu"
+			class="icon_application-menu"
+			aria-label="menu"
+			aria-haspopup="true"
+			aria-controls="menu"
+		>
 			<input type="checkbox" id="menu" />
 		</label>
 		<nav>
@@ -19,8 +25,8 @@ const { title, description, image = "favicon.svg" } = Astro.props;
 				<div class="profile">
 					<img src="" alt="SR" />
 				</div>
-				<ul role="list">
-					<li>
+				<ul role="menu" aria-labelledby="menubutton">
+					<li role="menuitem">
 						<Link
 							class="icon_view-institution"
 							aria-current={pathname === "/" ? "page" : "false"}
@@ -28,7 +34,7 @@ const { title, description, image = "favicon.svg" } = Astro.props;
 							text="Home"
 						/>
 					</li>
-					<li>
+					<li role="menuitem">
 						<Link
 							class="icon_help-about"
 							aria-current={pathname === "/about/" ? "page" : "false"}
@@ -36,7 +42,7 @@ const { title, description, image = "favicon.svg" } = Astro.props;
 							text="About"
 						/>
 					</li>
-					<li>
+					<li role="menuitem">
 						<Link
 							class="icon_document-edit-sign"
 							aria-current={pathname === "/blogs/" ? "page" : "false"}
@@ -87,6 +93,12 @@ const { title, description, image = "favicon.svg" } = Astro.props;
 				grid-template-columns: minmax(0, 0) minmax(0, 1fr);
 				transition: grid-template-columns var(--timing) var(--easing);
 
+				nav {
+					content-visibility: hidden;
+					transition-behavior: allow-discrete;
+					transition-delay: 0.5s;
+				}
+
 				main,
 				footer {
 					transition: filter var(--timing) var(--easing);
@@ -98,6 +110,11 @@ const { title, description, image = "favicon.svg" } = Astro.props;
 				grid-template-columns: minmax(0, 250px) minmax(0, 1fr);
 				transition-timing-function: ease-in-out;
 				transition-duration: 0.2s;
+
+				nav {
+					content-visibility: visible;
+					transition-delay: 0s;
+				}
 
 				main,
 				footer {
@@ -134,7 +151,8 @@ const { title, description, image = "favicon.svg" } = Astro.props;
 					backdrop-filter: blur(5px);
 				}
 
-				&:hover::before {
+				&:hover::before,
+				&:focus-within::before {
 					background: oklch(from var(--colorPrimary) l c h / 0.5);
 					border-color: oklch(from var(--colorPrimary) l c h / 1);
 				}
