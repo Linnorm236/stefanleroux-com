@@ -11,8 +11,9 @@ const { title, description, image = "favicon.svg" } = Astro.props;
 <html lang="en">
 	<Meta title={title} description={description} image={image} />
 	<body>
-		<label for="menu" class="icon_application-menu"></label>
-		<input type="checkbox" name="menu" id="menu" />
+		<label for="menu" class="icon_application-menu">
+			<input type="checkbox" id="menu" />
+		</label>
 		<nav>
 			<div class="sticky">
 				<div class="profile">
@@ -93,7 +94,7 @@ const { title, description, image = "favicon.svg" } = Astro.props;
 				}
 			}
 
-			&:has(> label[for="menu"] + input[name="menu"]:checked) {
+			&:has(> label[for="menu"] > input#menu:checked) {
 				grid-template-columns: minmax(0, 250px) minmax(0, 1fr);
 				transition-timing-function: ease-in-out;
 				transition-duration: 0.2s;
@@ -113,7 +114,7 @@ const { title, description, image = "favicon.svg" } = Astro.props;
 				font-family: icons;
 				z-index: 1;
 
-				& + input[name="menu"] {
+				& > input#menu {
 					display: block;
 					position: fixed;
 					width: 0;
@@ -138,12 +139,12 @@ const { title, description, image = "favicon.svg" } = Astro.props;
 					border-color: oklch(from var(--colorPrimary) l c h / 1);
 				}
 
-				&:has(+ input[name="menu"]:checked)::before {
+				&:has(> input#menu:checked)::before {
 					background: oklch(from var(--colorPrimary) l c h / 0.8);
 					border-color: oklch(from var(--colorPrimary) l c h / 1);
 				}
 
-				&:has(+ input[name="menu"]:checked):focus::before {
+				&:has(> input#menu:checked):focus::before {
 					background: oklch(from var(--colorPrimary) l c h / 0.2);
 					border-color: oklch(from var(--colorPrimary) l c h / 0.5);
 				}
@@ -158,7 +159,7 @@ const { title, description, image = "favicon.svg" } = Astro.props;
 					z-index: -1;
 				}
 
-				&:has(+ input[name="menu"]:checked)::after {
+				&:has(> input#menu:checked)::after {
 					display: block;
 				}
 			}
