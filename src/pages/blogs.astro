@@ -4,7 +4,9 @@ import LayoutDefault from "../layouts/LayoutDefault.astro";
 import { getCollection } from "astro:content";
 import { Image } from "astro:assets";
 
-const posts = (await getCollection("blogs")).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const posts = (await getCollection("blogs")).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
 
 const title = "Blogs";
 const description = "My Description";
@@ -38,23 +40,7 @@ const image = "../images/favicon.svg";
 </LayoutDefault>
 
 <style>
-	@property --angle {
-		syntax: "<angle>";
-		inherits: true;
-		initial-value: 45deg;
-	}
-
-	section {
-		inline-size: min(1200px, 100%);
-		padding-inline: 2rem;
-	}
-
 	.blogs {
-		--radius: 3rem;
-		--padding: 2.5rem;
-		--radiusShape: squircle;
-		--timing: 0.3s;
-		--easing: cubic-bezier(0.8, -0.4, 0.5, 1);
 		display: grid;
 		grid: auto / repeat(auto-fill, minmax(min(280px, 100%), 1fr));
 		gap: 3rem;
@@ -62,65 +48,58 @@ const image = "../images/favicon.svg";
 
 	li {
 		position: relative;
-		transition: all var(--timing) var(--easing);
+		background: oklch(from var(--colorBackground) calc(l + 0.045) c h / 0.5);
+		backdrop-filter: blur(3px);
+		border-radius: var(--borderRadius);
+		border: solid var(--borderWidth) var(--borderColor);
+		isolation: isolate;
 
-		&::before {
-			content: "";
-			position: absolute;
-			inset: 0;
-			border-radius: var(--radius);
-			corner-shape: var(--radiusShape);
-			background: var(--c-yel);
-			translate: 0.35rem 0.25rem;
-			filter: blur(0px);
-			transition:
-				translate var(--timing) var(--easing),
-				scale var(--timing) var(--easing),
-				filter var(--timing) var(--easing);
+		&:has(a:hover),
+		&:focus-within {
+			background: oklch(from var(--colorPrimary) l c h / 0.2);
+			border-color: oklch(from var(--colorPrimary) l c h / 0.5);
 		}
 
 		&:has(a:hover) {
-			scale: 1.025;
-
-			&::before {
-				translate: 0 0;
-				scale: 1.025 0.95;
-			}
-
 			& ~ li {
 				opacity: 0.5;
-				scale: 0.95;
-				filter: blur(2px);
 			}
 		}
 
 		&:has(~ li a:hover) {
 			opacity: 0.5;
-			scale: 0.95;
-			filter: blur(2px);
+		}
+
+		@media (prefers-reduced-motion: no-preference) {
+			& {
+				transition:
+					border-color 0.05s ease-in-out,
+					background 0.15s ease-in-out;
+			}
 		}
 	}
 
 	article {
+		padding: 1em;
 		block-size: 100%;
 		display: flex;
 		flex-flow: column;
 		gap: 1.75rem;
-		padding: var(--padding);
-		background: var(--c-blu);
-		border-radius: var(--radius);
-		corner-shape: var(--radiusShape);
-		isolation: isolate;
 
 		h2 {
-			font-size: var(--fs-3);
+			font-size: var(--fs-2);
 			line-height: 1.1;
+
+			a {
+				display: inline-block;
+			}
 
 			a::before {
 				content: "";
 				position: absolute;
 				inset: 0;
 				z-index: 1;
+				outline: inherit;
 			}
 		}
 
@@ -128,13 +107,20 @@ const image = "../images/favicon.svg";
 			inline-size: 100%;
 			aspect-ratio: 16 / 10;
 			object-fit: cover;
-			border-radius: calc(var(--radius) - (var(--padding) / 1.5));
+			border-radius: var(--borderRadius);
 			transition: scale 0.2s var(--easing);
 			transform-origin: 50% 100%;
 		}
 
 		time {
-			font-size: var(--fs-1);
+			font-size: var(--fs-0);
+			display: inline-block;
+			background: oklch(from var(--colorSecondary) l c h / 0.15);
+			color: var(--colorSecondary);
+			border-radius: var(--borderRadius);
+			font-weight: 900;
+			padding-inline: 0.3em;
+			padding-block: 0.15em;
 		}
 
 		p {
@@ -149,28 +135,27 @@ const image = "../images/favicon.svg";
 
 		&::after {
 			content: "Read More";
-			border: solid 0.25rem transparent;
-			border-radius: calc(var(--radius) - (var(--padding) / 2));
-			corner-shape: var(--radiusShape);
-			padding-inline: 0.75em;
-			padding-block: 0.35em;
+			font-size: var(--fs-1);
+			padding-inline: var(--paddingGap);
+			padding-block: calc(var(--paddingGap) / 1.35);
+			background: oklch(from var(--colorBackground) calc(l + 0.1) c h / 0.5);
+			border: solid var(--borderWidth) oklch(from var(--colorBackground) calc(l + 0.2) c h / 0.5);
+			border-radius: var(--borderRadius);
 			text-align: center;
-			background:
-				linear-gradient(var(--c-blk)) padding-box,
-				conic-gradient(
-						from var(--angle) at center,
-						var(--c-yel) 10%,
-						transparent 20%,
-						transparent 80%,
-						var(--c-yel) 90%
-					)
-					border-box;
-			transition: --angle var(--timing) var(--easing);
 		}
 
-		&:has(a:hover) {
-			&::after {
-				--angle: 225deg;
+		&:hover::after,
+		&:focus-within::after {
+			background: oklch(from var(--colorPrimary) l c h / 0.5);
+			border-color: oklch(from var(--colorPrimary) l c h / 1);
+		}
+
+		@media (prefers-reduced-motion: no-preference) {
+			&:hover::after,
+			&:focus-within::after {
+				transition:
+					border-color 0.05s ease-in-out,
+					background 0.15s ease-in-out;
 			}
 		}
 	}

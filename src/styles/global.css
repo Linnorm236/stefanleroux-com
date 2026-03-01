@@ -75,18 +75,21 @@
 
 @layer theme {
 	@font-face {
-		font-family: Patrick;
-		src: url("/fonts/patrick.woff2") format("woff2");
+		font-family: suse;
+		src: url("/fonts/suse.woff2") format("woff2");
+		font-style: normal;
 		font-display: fallback;
 	}
 
 	:root {
-		--c-blu: oklch(0.405 0.0964 242.46);
-		--c-grn: oklch(0.711 0.2407 142.57);
-		--c-yel: oklch(1 0.04 100);
-		--c-red: oklch(0.5988 0.2442 27.71);
-		--c-blk: oklch(0.2162 0.0241 273.38);
-		--c-wht: oklch(1 0 0);
+		--colorPrimary: #3a9fd5;
+		--colorSecondary: #269c4e;
+		--colorTertiary: #f39c1f;
+		--colorBackground: #141618;
+		--colorText: #ddd;
+
+		--borderWidth: 0.15rem;
+		--borderColor: oklch(from #fff l c h / 0.1);
 
 		--fs-0: clamp(1.28rem, 0.17vi + 1.21rem, 1.43rem);
 		--fs-1: clamp(1.6rem, 0.34vi + 1.46rem, 1.9rem);
@@ -95,50 +98,30 @@
 		--fs-4: clamp(3.13rem, 1.56vi + 2.5rem, 4.5rem);
 		--fs-5: clamp(3.91rem, 2.38vi + 2.96rem, 6rem);
 		--fs-6: clamp(4.88rem, 3.54vi + 3.47rem, 8rem);
+
+		--paddingGap: 0.45em;
+		--borderRadius: 0.5rem;
 	}
 
 	body {
 		--gradSize: 60px;
 		--gradColor:
-			color-mix(in oklch, var(--c-blu), transparent 90%) 0px, color-mix(in oklch, var(--c-blu), transparent 90%) 2px,
-			transparent 2px, transparent var(--gradSize);
+			color-mix(in oklch, var(--colorPrimary), transparent 95%) 0px,
+			color-mix(in oklch, var(--colorPrimary), transparent 95%) 2px, transparent 2px,
+			transparent var(--gradSize);
 		background:
-			linear-gradient(90deg, var(--gradColor)) calc(50% - (var(--gradSize) / 2)) 50% / var(--gradSize) auto fixed,
+			linear-gradient(90deg, var(--gradColor)) calc(50% - (var(--gradSize) / 2)) 50% / var(--gradSize) auto
+				fixed,
 			repeating-linear-gradient(30deg, var(--gradColor)) 50% 50% / cover fixed,
 			repeating-linear-gradient(-30deg, var(--gradColor)) 50% 50% / cover fixed,
-			var(--c-blk);
+			#141618;
 		font-size: var(--fs-2);
-		font-family: Patrick, system-ui;
+		font-family: suse, system-ui;
 		color: light-dark(#222, #dddddd);
 	}
-}
 
-@layer utils {
-	.u-b {
-		font-weight: 700;
-	}
-	.u-u {
-		text-transform: uppercase;
-	}
-	.u-i {
-		font-style: italic;
-	}
-	.u-xl {
-		text-align: start;
-	}
-	.u-xr {
-		text-align: end;
-	}
-	.u-xc {
-		text-align: center;
-	}
-	.u-yl {
-		text-align: start;
-	}
-	.u-yr {
-		text-align: end;
-	}
-	.u-yc {
-		text-align: center;
+	section {
+		inline-size: min(1200px, 90%);
+		margin-inline: auto;
 	}
 }
