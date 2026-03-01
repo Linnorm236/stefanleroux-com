@@ -28,10 +28,10 @@ const { frontmatter } = Astro.props;
 	article {
 		width: min(900px, 100%);
 		margin-inline: auto;
-		padding-block: 2rem;
-		padding-inline: 2rem;
+		padding-block: 3rem;
+		padding-inline: 2.5rem;
 
-		> header {
+		& > header {
 			margin-block-end: 2.5em;
 			display: grid;
 			gap: 2.5em;
@@ -40,8 +40,7 @@ const { frontmatter } = Astro.props;
 				inline-size: 100%;
 				aspect-ratio: 16 / 10;
 				object-fit: cover;
-				border-radius: 2em;
-				corner-shape: scoop;
+				border-radius: var(--borderRadius);
 			}
 
 			p {
@@ -72,16 +71,16 @@ const { frontmatter } = Astro.props;
 		}
 
 		h1 {
-			font-size: var(--fs-6);
-		}
-		h2 {
 			font-size: var(--fs-5);
 		}
-		h3 {
+		h2 {
 			font-size: var(--fs-4);
 		}
-		h4 {
+		h3 {
 			font-size: var(--fs-3);
+		}
+		h4 {
+			font-size: var(--fs-2);
 		}
 
 		header + p {
