@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import "../styles/icons-breeze.css";
+import Analytics from "../blocks/analytics.astro";
 
 const { title, description, image = "favicon.svg" } = Astro.props;
 
@@ -32,4 +33,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
 	<meta name="description" content={description} />
 	<title>{title}</title>
+
+	{import.meta.env.PROD && <Analytics />}
 </head>
