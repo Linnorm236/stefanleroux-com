@@ -1,0 +1,182 @@
+<form popover id="contact">
+	<label for="name">
+		<span>Name</span>
+		<input id="name" type="text" placeholder="Name" autocomplete="false" required />
+	</label>
+	<label for="email">
+		<span>Email</span>
+		<input id="email" type="email" placeholder="test" autocomplete="false" required />
+	</label>
+	<label for="message">
+		<span>Message</span>
+		<textarea id="message" placeholder="Message" required></textarea>
+	</label>
+	<input type="hidden" name="_wpcf7_unit_tag" value="wpcf7-f6-p8-o1" />
+	<output id="statusMessage"></output>
+	<button class="icon_mail-send" type="submit"> Submit </button>
+</form>
+
+<script is:inline>
+	contact.onsubmit = async (e) => {
+		e.preventDefault();
+
+		statusMessage.setAttribute("data-status", "processing");
+		statusMessage.value = "Processing";
+
+		try {
+			let response = await fetch(
+				"https://lab.vivtec.co.za/forms/wp-json/contact-form-7/v1/contact-forms/6/feedback",
+				{
+					method: "POST",
+					body: new FormData(formContact),
+				},
+			);
+
+			let result = await response.json();
+
+			if (result.status === "mail_sent") {
+				statusMessage.setAttribute("data-status", "completed");
+				statusMessage.value = result.message;
+			} else {
+				statusMessage.setAttribute("data-status", "error");
+				statusMessage.value = "You made a mistake";
+			}
+		} catch (error) {
+			statusMessage.setAttribute("data-status", "error");
+			statusMessage.value = "Forms doesn't do anything yet";
+
+			if (error instanceof TypeError) {
+				statusMessage.value = "Fucking CORS";
+			}
+		}
+	};
+</script>
+
+<style>
+	form {
+		--padding-inline: 1.25rem;
+		--padding-block: 0.75rem;
+		background: var(--blockColor);
+		padding-inline: 3rem;
+		padding-block: 3rem;
+		gap: 3rem;
+		opacity: 0;
+		inline-size: min(400px, 100% - 5rem);
+		border-radius: var(--borderRadius);
+		border: var(--blockBorder);
+		transition: all 0.2s allow-discrete;
+		z-index: 5;
+
+		&:popover-open {
+			display: grid;
+			opacity: 1;
+
+			@starting-style {
+				display: grid;
+				opacity: 0;
+			}
+		}
+
+		&::backdrop {
+			opacity: 0;
+			background: #00000080;
+			transition: all 0.2s allow-discrete;
+			pointer-events: auto;
+		}
+
+		&:popover-open::backdrop {
+			opacity: 1;
+
+			@starting-style {
+				display: block;
+				opacity: 0;
+			}
+		}
+	}
+
+	label {
+		font-size: var(--fs-1);
+
+		:is(input, textarea, span) {
+			padding-inline: var(--padding-inline);
+			padding-block: var(--padding-block);
+		}
+
+		:is(input, button, textarea) {
+			display: block;
+			inline-size: 100%;
+			outline: unset;
+		}
+
+		:is(input, textarea) {
+			background: oklch(from var(--blockColor) 0.2 c h);
+
+			&::placeholder {
+				opacity: 0;
+			}
+		}
+
+		textarea {
+			resize: vertical;
+			block-size: calc(5lh + (1.15rem * 2) + (var(--borderWidth) * 2));
+		}
+	}
+
+	span {
+		position: absolute;
+		padding-inline: 1.5rem;
+		padding-block: 1.25rem;
+		border: 2px solid transparent;
+		z-index: 1;
+		opacity: 0.6;
+		border-radius: var(--borderRadius);
+		transition:
+			all 0.2s 0s ease-in-out,
+			background 0.2s -0.05s ease-in-out;
+
+		&:has(+ :is(input, textarea):focus-visible),
+		&:has(+ :is(input, textarea):not(:placeholder-shown)) {
+			translate: calc(var(--padding-inline) - 0.5rem) -75%;
+			font-size: 1.5rem;
+			padding-inline: 0.5rem;
+			padding-block: 0.1rem;
+			line-height: 1;
+			background: oklch(from var(--colorPri) l c h / 0.7);
+			backdrop-filter: blur(5px);
+			color: var(--canvasText);
+			opacity: 1;
+			transition:
+				all 0.2s 0s ease-in-out,
+				background 0.2s 0.05s ease-in-out;
+		}
+	}
+
+	output {
+		--color: var(--canvasText);
+		padding-inline: var(--padding-inline);
+		padding-block: var(--padding-block);
+		border-radius: var(--borderRadius);
+		color: var(--color);
+		background: oklch(from var(--color) l c h / 0.2);
+		border: var(--blockBorder);
+		border-color: var(--color);
+
+		&:empty {
+			display: none;
+		}
+		&[data-status="processing"] {
+			--color: var(--colorPri);
+		}
+		&[data-status="error"] {
+			--color: var(--colorErr);
+		}
+		&[data-status="completed"] {
+			background: green;
+		}
+	}
+
+	button {
+		display: block;
+		text-align: center;
+	}
+</style>
