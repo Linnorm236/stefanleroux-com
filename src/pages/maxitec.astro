@@ -10,7 +10,13 @@ const image = "../images/favicon.svg";
 	<article>
 		<header>
 			<div class="maxitec-logo">
-				<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" viewBox="0 0 1024 1024" width="50px" height="50px">
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					xml:space="preserve"
+					viewBox="0 0 1024 1024"
+					width="50px"
+					height="50px"
+				>
 					<circle cx="512" cy="512" r="512" fill="#ea7324"></circle>
 					<path
 						fill="#fff"
@@ -33,16 +39,22 @@ const image = "../images/favicon.svg";
 		</p>
 		<ul>
 			<li>
-				Building & hosting <a href="https://wordpress.org/" target="_blank">WordPress</a> sites (and the occasional bespoke
-				project from scratch with the <a href="https://astro.build/" target="_blank"> Astro framework</a>).
+				Building & hosting <a href="https://wordpress.org/" target="_blank">WordPress</a> sites (and the occasional
+				bespoke project from scratch with the <a href="https://astro.build/" target="_blank">
+					Astro framework</a
+				>).
 			</li>
-			<li>Translating design files; from Photoshop, Penpot, InDesign, or Figma; into fully functional websites.</li>
 			<li>
-				Maintaining 100+ hosting clients, ensuring PHP compatibility, email deliverability, and swift troubleshooting.
+				Translating design files; from Photoshop, Penpot, InDesign, or Figma; into fully functional websites.
+			</li>
+			<li>
+				Maintaining 100+ hosting clients, ensuring PHP compatibility, email deliverability, and swift
+				troubleshooting.
 			</li>
 			<li>Producing training videos so clients can run their own WooCommerce shops.</li>
 			<li>
-				Crafting HTML email signatures that render across Outlook, Gmail, Apple Mail, and the rest of the inbox zoo.
+				Crafting HTML email signatures that render across Outlook, Gmail, Apple Mail, and the rest of the
+				inbox zoo.
 			</li>
 		</ul>
 		<hr />
@@ -200,8 +212,7 @@ const image = "../images/favicon.svg";
 		gap: 2rem;
 		padding: 3rem;
 		place-items: center;
-		border-radius: 3em;
-		corner-shape: squircle;
+		border-radius: var(--borderRadius);
 		isolation: isolate;
 		overflow: clip;
 		background: #fff;
@@ -214,7 +225,8 @@ const image = "../images/favicon.svg";
 			inset: 0;
 			scale: 2;
 			background:
-				linear-gradient(90deg, color-mix(in oklch, #aaa, transparent 80%)) var(--gradFirst) / 200px 200px no-repeat,
+				linear-gradient(90deg, color-mix(in oklch, #aaa, transparent 80%)) var(--gradFirst) / 200px 200px
+					no-repeat,
 				linear-gradient(90deg, color-mix(in oklch, #aaa, transparent 80%)) 70% 20% / 200px 200px no-repeat,
 				linear-gradient(90deg, color-mix(in oklch, #aaa, transparent 80%)) 50% 45% / 200px 200px no-repeat,
 				linear-gradient(90deg, color-mix(in oklch, #aaa, transparent 80%)) 60% 30% / 200px 200px no-repeat;
@@ -246,7 +258,7 @@ const image = "../images/favicon.svg";
 		background: #221f20;
 		text-align: center;
 		color: white;
-		border-radius: 3em;
+		border-radius: var(--borderRadius);
 		corner-shape: squircle;
 	}
 </style>
