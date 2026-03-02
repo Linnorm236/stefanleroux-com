@@ -28,7 +28,7 @@
 	:where(ul, ol) {
 		padding-inline-start: 3rem;
 
-		&:is([role="list"], [role="menu"]) {
+		&:where([role="list"], [role="menu"]) {
 			list-style: none;
 			padding: 0;
 
@@ -56,6 +56,9 @@
 
 	:where([popover]) {
 		margin: auto;
+		padding: unset;
+		border: unset;
+		background: unset;
 	}
 
 	:where(h1, h2, h3, h4, h5, h6) {
@@ -82,14 +85,24 @@
 	}
 
 	:root {
-		--colorPrimary: #3a9fd5;
-		--colorSecondary: #269c4e;
-		--colorTertiary: #f39c1f;
-		--colorBackground: #141618;
-		--colorText: #ddd;
+		--colorPri: oklch(0.6679 0.1214 236.3);
+		--colorSuc: oklch(0.8664 0.2948 142.5);
+		--colorMes: oklch(0.8442 0.1722 84.93);
+		--colorErr: oklch(0.6281 0.2577 29.23);
 
-		--borderWidth: 0.15rem;
-		--borderColor: oklch(from #fff l c h / 0.1);
+		--canvasColor: oklch(0.22 0.0059 236.81);
+		--canvasText: oklch(1 0 0);
+
+		--borderWidth: 0.16rem;
+		--borderStyle: Solid;
+		--borderColor: oklch(from var(--canvasColor) calc(l + 0.1) c h);
+		--borderRadius: 0.5rem;
+
+		--blockColor: oklch(from var(--canvasColor) calc(l - 0.015) c h);
+		--blockBorder: var(--borderWidth) var(--borderStyle) var(--borderColor);
+
+		--buttonColor: oklch(from var(--blockColor) calc(l + 0.05) c h / 1);
+		--buttonBorder: var(--borderWidth) var(--borderStyle) var(--borderColor);
 
 		--fs-0: clamp(1.28rem, 0.17vi + 1.21rem, 1.43rem);
 		--fs-1: clamp(1.6rem, 0.34vi + 1.46rem, 1.9rem);
@@ -100,28 +113,64 @@
 		--fs-6: clamp(4.88rem, 3.54vi + 3.47rem, 8rem);
 
 		--paddingGap: 0.45em;
-		--borderRadius: 0.5rem;
 	}
 
 	body {
-		--gradSize: 60px;
-		--gradColor:
-			color-mix(in oklch, var(--colorPrimary), transparent 95%) 0px,
-			color-mix(in oklch, var(--colorPrimary), transparent 95%) 2px, transparent 2px,
-			transparent var(--gradSize);
+		--bgSize: 50px;
+		--bgWidth: 2px;
+		--bgGrad:
+			color-mix(in oklch, var(--canvasText), transparent 98%) 0px,
+			color-mix(in oklch, var(--canvasText), transparent 98%) var(--bgWidth), transparent var(--bgWidth),
+			transparent var(--bgSize);
 		background:
-			linear-gradient(90deg, var(--gradColor)) calc(50% - (var(--gradSize) / 2)) 50% / var(--gradSize) auto
-				fixed,
-			repeating-linear-gradient(30deg, var(--gradColor)) 50% 50% / cover fixed,
-			repeating-linear-gradient(-30deg, var(--gradColor)) 50% 50% / cover fixed,
-			#141618;
+			linear-gradient(90deg, var(--bgGrad)) calc(50% - (var(--bgSize) / 2) - calc(var(--bgWidth) / 2)) 50% /
+				var(--bgSize) auto fixed,
+			repeating-linear-gradient(30deg, var(--bgGrad)) 50% 50% / cover fixed,
+			repeating-linear-gradient(-30deg, var(--bgGrad)) 50% 50% / cover fixed,
+			oklch(from var(--canvasColor) l c h);
 		font-size: var(--fs-2);
 		font-family: suse, system-ui;
-		color: light-dark(#222, #dddddd);
+	}
+
+	:is(.button, button, input, textarea) {
+		display: inline-grid;
+		grid: auto / auto 1fr;
+		align-items: center;
+		gap: var(--paddingGap);
+		padding-inline: var(--paddingGap);
+		padding-block: calc(var(--paddingGap) / 1.35);
+		background: var(--buttonColor);
+		border: var(--buttonBorder);
+		border-radius: var(--borderRadius);
+
+		&[class*="icon"]::before {
+			font-family: "icons";
+			text-wrap: nowrap;
+		}
+
+		&:hover,
+		&:focus-within {
+			background: oklch(from var(--colorPri) l c h / 0.2);
+			border-color: oklch(from var(--colorPri) l c h / 0.5);
+		}
+
+		&[aria-current="page"] {
+			background: oklch(from var(--colorPri) l c h / 0.5);
+			border-color: oklch(from var(--colorPri) l c h / 1);
+		}
+
+		@media (prefers-reduced-motion: no-preference) {
+			& {
+				transition:
+					border-color 0.05s ease-in-out,
+					background 0.15s ease-in-out;
+			}
+		}
 	}
 
 	section {
 		inline-size: min(1200px, 90%);
 		margin-inline: auto;
+		content-visibility: auto;
 	}
 }
