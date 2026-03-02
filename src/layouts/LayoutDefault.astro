@@ -1,6 +1,7 @@
 ---
 import Meta from "../blocks/meta.astro";
 import Link from "../blocks/link.astro";
+import Contact from "../blocks/contact.astro";
 
 const { pathname } = Astro.url;
 
@@ -11,13 +12,7 @@ const { title, description, image = "favicon.svg" } = Astro.props;
 <html lang="en">
 	<Meta title={title} description={description} image={image} />
 	<body>
-		<label
-			for="menu"
-			class="icon_application-menu"
-			aria-label="menu"
-			aria-haspopup="true"
-			aria-controls="menu"
-		>
+		<label for="menu" class="icon_application-menu" aria-label="menu">
 			<input type="checkbox" id="menu" />
 		</label>
 		<nav>
@@ -25,10 +20,10 @@ const { title, description, image = "favicon.svg" } = Astro.props;
 				<div class="profile">
 					<img src="" alt="SR" />
 				</div>
-				<ul role="menu" aria-labelledby="menubutton">
+				<ul role="menu">
 					<li role="menuitem">
 						<Link
-							class="icon_view-institution"
+							class="button icon_view-institution"
 							aria-current={pathname === "/" ? "page" : "false"}
 							href="/"
 							text="Home"
@@ -36,7 +31,7 @@ const { title, description, image = "favicon.svg" } = Astro.props;
 					</li>
 					<li role="menuitem">
 						<Link
-							class="icon_help-about"
+							class="button icon_help-about"
 							aria-current={pathname === "/about/" ? "page" : "false"}
 							href="/about/"
 							text="About"
@@ -44,13 +39,20 @@ const { title, description, image = "favicon.svg" } = Astro.props;
 					</li>
 					<li role="menuitem">
 						<Link
-							class="icon_document-edit-sign"
+							class="button icon_document-edit-sign"
 							aria-current={pathname === "/blogs/" ? "page" : "false"}
 							href="/blogs/"
 							text="Blog"
 						/>
 					</li>
 				</ul>
+				<div class="contact">
+					<a class="button icon_edit-download" href="/docs/stefanleroux.pdf" download="stefanleroux-cv"
+						>Résumé</a
+					>
+					<button class="icon_mail-send" popovertarget="contact">Contact</button>
+					<Contact />
+				</div>
 			</div>
 		</nav>
 		<main>
@@ -118,7 +120,7 @@ const { title, description, image = "favicon.svg" } = Astro.props;
 
 				main,
 				footer {
-					filter: grayscale(50%) brightness(80%);
+					filter: grayscale(100%) brightness(50%);
 					transition-timing-function: ease-in-out;
 					transition-duration: 0.2s;
 				}
@@ -142,8 +144,8 @@ const { title, description, image = "favicon.svg" } = Astro.props;
 				&::before {
 					display: block;
 					padding: var(--paddingGap);
-					background: oklch(from var(--colorBackground) calc(l + 0.1) c h / 0.8);
-					border: solid var(--borderWidth) oklch(from var(--colorBackground) calc(l + 0.2) c h / 1);
+					background: var(--buttonColor);
+					border: var(--buttonBorder);
 					border-radius: var(--borderRadius);
 					font-size: 3.5rem;
 					line-height: 1;
@@ -153,18 +155,18 @@ const { title, description, image = "favicon.svg" } = Astro.props;
 
 				&:hover::before,
 				&:focus-within::before {
-					background: oklch(from var(--colorPrimary) l c h / 0.5);
-					border-color: oklch(from var(--colorPrimary) l c h / 1);
+					background: oklch(from var(--colorPri) l c h / 0.5);
+					border-color: oklch(from var(--colorPri) l c h / 1);
 				}
 
 				&:has(> input#menu:checked)::before {
-					background: oklch(from var(--colorPrimary) l c h / 0.8);
-					border-color: oklch(from var(--colorPrimary) l c h / 1);
+					background: oklch(from var(--colorPri) l c h / 0.8);
+					border-color: oklch(from var(--colorPri) l c h / 1);
 				}
 
 				&:has(> input#menu:checked):focus::before {
-					background: oklch(from var(--colorPrimary) l c h / 0.2);
-					border-color: oklch(from var(--colorPrimary) l c h / 0.5);
+					background: oklch(from var(--colorPri) l c h / 0.2);
+					border-color: oklch(from var(--colorPri) l c h / 0.5);
 				}
 
 				&::after {
@@ -188,6 +190,8 @@ const { title, description, image = "favicon.svg" } = Astro.props;
 		position: relative;
 		z-index: 1;
 		isolation: isolate;
+		background: var(--blockColor);
+		box-shadow: inset -0.15rem 0 0 0 var(--borderColor);
 
 		.sticky {
 			position: sticky;
@@ -195,34 +199,19 @@ const { title, description, image = "favicon.svg" } = Astro.props;
 			height: 100lvh;
 			overflow: clip auto;
 			display: grid;
+			grid: auto 1fr auto / auto;
 			place-content: start;
-			gap: 2rem;
-			padding-block: 2rem;
-			background: oklch(from var(--colorBackground) calc(l + 0.045) c h / 0.5);
-			box-shadow: inset -0.15rem 0 0 0 oklch(from #fff l c h / 0.1);
-			backdrop-filter: blur(3px);
-		}
-
-		ul {
-			display: grid;
-			gap: 1rem;
-			padding-inline: 1rem;
-		}
-
-		a {
+			gap: 3rem;
+			padding-block: 3rem;
 			font-size: 2.5rem;
-			inline-size: 100%;
-			line-height: 1;
 
-			&[aria-current="page"] {
-				background: oklch(from var(--colorPrimary) l c h / 0.5);
-				border-color: oklch(from var(--colorPrimary) l c h / 1);
+			& > :is(.profile, [role="menu"], .contact) {
+				padding-inline: 3rem;
 			}
 		}
 
 		.profile {
-			padding-inline: 1em;
-			width: 250px;
+			inline-size: 250px;
 
 			& > img {
 				width: 100%;
@@ -234,6 +223,29 @@ const { title, description, image = "favicon.svg" } = Astro.props;
 				background: oklch(from #02b787 l c h / 0.3);
 				border-radius: 50%;
 				border: solid 0.15rem oklch(from #02b787 l c h / 1);
+			}
+		}
+
+		ul {
+			display: flex;
+			flex-flow: column nowrap;
+			gap: 1.5rem;
+		}
+
+		a {
+			inline-size: 100%;
+			line-height: 1;
+		}
+
+		.contact {
+			display: grid;
+			gap: 1.5rem;
+
+			button {
+				font-size: 2.5rem;
+				inline-size: 100%;
+				line-height: 1;
+				text-align: start;
 			}
 		}
 	}
