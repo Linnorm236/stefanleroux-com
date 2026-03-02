@@ -48,7 +48,7 @@ const image = "../images/favicon.svg";
 
 	li {
 		position: relative;
-		background: oklch(from var(--colorBackground) calc(l + 0.045) c h / 0.5);
+		background: var(--blockColor);
 		backdrop-filter: blur(3px);
 		border-radius: var(--borderRadius);
 		border: solid var(--borderWidth) var(--borderColor);
@@ -56,8 +56,8 @@ const image = "../images/favicon.svg";
 
 		&:has(a:hover),
 		&:focus-within {
-			background: oklch(from var(--colorPrimary) l c h / 0.2);
-			border-color: oklch(from var(--colorPrimary) l c h / 0.5);
+			background: oklch(from var(--colorPri) l c h / 0.2);
+			border-color: oklch(from var(--colorPri) l c h / 0.5);
 		}
 
 		&:has(a:hover) {
@@ -115,8 +115,8 @@ const image = "../images/favicon.svg";
 		time {
 			font-size: var(--fs-0);
 			display: inline-block;
-			background: oklch(from var(--colorSecondary) l c h / 0.15);
-			color: var(--colorSecondary);
+			background: oklch(from var(--colorSuc) l c h / 0.15);
+			color: var(--colorSuc);
 			border-radius: var(--borderRadius);
 			font-weight: 900;
 			padding-inline: 0.3em;
@@ -138,16 +138,16 @@ const image = "../images/favicon.svg";
 			font-size: var(--fs-1);
 			padding-inline: var(--paddingGap);
 			padding-block: calc(var(--paddingGap) / 1.35);
-			background: oklch(from var(--colorBackground) calc(l + 0.1) c h / 0.5);
-			border: solid var(--borderWidth) oklch(from var(--colorBackground) calc(l + 0.2) c h / 0.5);
+			background: var(--buttonColor);
+			border: var(--buttonBorder);
 			border-radius: var(--borderRadius);
 			text-align: center;
 		}
 
 		&:hover::after,
 		&:focus-within::after {
-			background: oklch(from var(--colorPrimary) l c h / 0.5);
-			border-color: oklch(from var(--colorPrimary) l c h / 1);
+			background: oklch(from var(--colorPri) l c h / 0.5);
+			border-color: oklch(from var(--colorPri) l c h / 1);
 		}
 
 		@media (prefers-reduced-motion: no-preference) {
