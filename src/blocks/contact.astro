@@ -37,6 +37,7 @@
 			if (result.status === "mail_sent") {
 				statusMessage.setAttribute("data-status", "completed");
 				statusMessage.value = result.message;
+				contact.reset();
 			} else {
 				statusMessage.setAttribute("data-status", "error");
 				statusMessage.value = "You made a mistake";
