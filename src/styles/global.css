@@ -133,15 +133,15 @@
 	}
 
 	:is(.button, button) {
-		display: inline-grid;
-		grid: auto / auto 1fr;
-		align-items: center;
+		display: flex;
 		gap: var(--paddingGap);
 		padding-inline: var(--paddingGap);
 		padding-block: calc(var(--paddingGap) / 1.35);
 		background: var(--buttonColor);
 		border: var(--buttonBorder);
 		border-radius: var(--borderRadius);
+		line-height: 1;
+		text-align: start;
 
 		&[class*="icon"]::before {
 			font-family: "icons";
@@ -169,8 +169,8 @@
 	}
 
 	form {
-		--padding-inline: 1.25rem;
-		--padding-block: 0.75rem;
+		--paddingInline: 1.25rem;
+		--paddingBlock: 0.75rem;
 		background: var(--blockColor);
 		padding-inline: 3rem;
 		padding-block: 3rem;
@@ -181,9 +181,10 @@
 		border: var(--blockBorder);
 
 		:is(input, textarea, span) {
-			padding-inline: var(--padding-inline);
-			padding-block: var(--padding-block);
+			padding-inline: var(--paddingInline);
+			padding-block: var(--paddingBlock);
 			font-size: var(--fs-1);
+
 			display: block;
 			border-radius: var(--borderRadius);
 		}
@@ -230,7 +231,7 @@
 
 			&:has(+ :is(input, textarea):focus-visible),
 			&:has(+ :is(input, textarea):not(:placeholder-shown)) {
-				translate: calc(var(--padding-inline) - 0.5rem) -75%;
+				translate: calc(var(--paddingInline) - 0.5rem) -75%;
 				font-size: 1.5rem;
 				padding-inline: 0.5rem;
 				padding-block: 0.1rem;
@@ -257,8 +258,8 @@
 
 		output {
 			--color: var(--canvasText);
-			padding-inline: var(--padding-inline);
-			padding-block: var(--padding-block);
+			padding-inline: var(--paddingInline);
+			padding-block: var(--paddingBlock);
 			border-radius: var(--borderRadius);
 			color: var(--color);
 			background: oklch(from var(--color) l c h / 0.2);

@@ -1,20 +1,24 @@
-<form popover id="contact">
-	<label>
-		<span>Name</span>
-		<input name="your-name" type="text" placeholder="Name" autocomplete="false" required />
-	</label>
-	<label>
-		<span>Email</span>
-		<input name="your-email" type="email" placeholder="user@domain.name" autocomplete="false" required />
-	</label>
-	<label>
-		<span>Message</span>
-		<textarea name="your-message" placeholder="Message" required></textarea>
-	</label>
-	<input type="hidden" name="_wpcf7_unit_tag" value="wpcf7-f20-p13-o1" />
-	<output id="statusMessage"></output>
-	<button class="icon_mail-send" type="submit"> Submit </button>
-</form>
+<div class="contact">
+	<a class="button icon_edit-download" href="/docs/stefanleroux.pdf" download="stefanleroux-cv">Résumé</a>
+	<button class="icon_mail-send" popovertarget="contact">Contact</button>
+	<form popover id="contact">
+		<label>
+			<span>Name</span>
+			<input name="your-name" type="text" placeholder="Name" autocomplete="false" required />
+		</label>
+		<label>
+			<span>Email</span>
+			<input name="your-email" type="email" placeholder="user@domain.name" autocomplete="false" required />
+		</label>
+		<label>
+			<span>Message</span>
+			<textarea name="your-message" placeholder="Message" required></textarea>
+		</label>
+		<input type="hidden" name="_wpcf7_unit_tag" value="wpcf7-f20-p13-o1" />
+		<output id="statusMessage"></output>
+		<button class="icon_mail-send" type="submit"> Submit </button>
+	</form>
+</div>
 
 <script is:inline>
 	contact.onsubmit = async (e) => {
@@ -57,6 +61,16 @@
 </script>
 
 <style>
+	.contact {
+		padding-inline: var(--paddingInline);
+		display: grid;
+		gap: 1.5rem;
+
+		& > :is(a, button) {
+			font-size: var(--fontSize);
+		}
+	}
+
 	form {
 		display: none;
 		opacity: 0;
@@ -78,7 +92,6 @@
 			opacity: 0;
 			background: #00000080;
 			transition: all 0.2s allow-discrete;
-			pointer-events: auto;
 		}
 
 		&:popover-open::backdrop {

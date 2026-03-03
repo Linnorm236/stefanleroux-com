@@ -40,19 +40,13 @@ const { title, description, image = "favicon.svg" } = Astro.props;
 					<li role="menuitem">
 						<Link
 							class="button icon_document-edit-sign"
-							aria-current={pathname === "/blogs/" ? "page" : "false"}
-							href="/blogs/"
+							aria-current={pathname === "/blog/" ? "page" : "false"}
+							href="/blog/"
 							text="Blog"
 						/>
 					</li>
 				</ul>
-				<div class="contact">
-					<a class="button icon_edit-download" href="/docs/stefanleroux.pdf" download="stefanleroux-cv"
-						>Résumé</a
-					>
-					<button class="icon_mail-send" popovertarget="contact">Contact</button>
-					<Contact />
-				</div>
+				<Contact />
 			</div>
 		</nav>
 		<main>
@@ -187,6 +181,8 @@ const { title, description, image = "favicon.svg" } = Astro.props;
 	}
 
 	nav {
+		--paddingInline: 3rem;
+		--fontSize: 2.5rem;
 		position: relative;
 		z-index: 1;
 		isolation: isolate;
@@ -203,14 +199,10 @@ const { title, description, image = "favicon.svg" } = Astro.props;
 			place-content: start;
 			gap: 3rem;
 			padding-block: 3rem;
-			font-size: 2.5rem;
-
-			& > :is(.profile, [role="menu"], .contact) {
-				padding-inline: 3rem;
-			}
 		}
 
 		.profile {
+			padding-inline: var(--paddingInline);
 			inline-size: 250px;
 
 			& > img {
@@ -227,26 +219,12 @@ const { title, description, image = "favicon.svg" } = Astro.props;
 		}
 
 		ul {
+			padding-inline: var(--paddingInline);
 			display: flex;
 			flex-flow: column nowrap;
 			gap: 1.5rem;
-		}
-
-		a {
-			inline-size: 100%;
-			line-height: 1;
-		}
-
-		.contact {
-			display: grid;
-			gap: 1.5rem;
-
-			button {
-				font-size: 2.5rem;
-				inline-size: 100%;
-				line-height: 1;
-				text-align: start;
-			}
+			align-items: stretch;
+			font-size: var(--fontSize);
 		}
 	}
 </style>
