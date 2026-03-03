@@ -1,15 +1,22 @@
 <form popover id="contact">
 	<label for="name">
 		<span>Name</span>
-		<input id="name" type="text" placeholder="Name" autocomplete="false" required />
+		<input id="name" name="your-name" type="text" placeholder="Name" autocomplete="false" required />
 	</label>
 	<label for="email">
 		<span>Email</span>
-		<input id="email" type="email" autocomplete="true" required placeholder="user@domain.name" />
+		<input
+			id="email"
+			name="your-email"
+			type="email"
+			autocomplete="true"
+			required
+			placeholder="user@domain.name"
+		/>
 	</label>
 	<label for="message">
 		<span>Message</span>
-		<textarea id="message" placeholder="Message" required></textarea>
+		<textarea id="message" name="your-message" placeholder="Message" required></textarea>
 	</label>
 	<input type="hidden" name="_wpcf7_unit_tag" value="wpcf7-f20-p13-o1" />
 	<output id="statusMessage"></output>
