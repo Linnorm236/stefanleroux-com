@@ -37,13 +37,9 @@
 			if (result.status === "mail_sent") {
 				statusMessage.setAttribute("data-status", "completed");
 				statusMessage.value = result.message;
-
-				// Clear only the form fields except the output field
-				[...contact.elements].forEach((element) => {
-					if (element.tagName === "INPUT" || element.tagName === "TEXTAREA") {
-						element.value = "";
-					}
-				});
+				setTimeout(() => {
+					contact.reset();
+				}, 3000);
 			} else {
 				statusMessage.setAttribute("data-status", "error");
 				statusMessage.value = "You made a mistake";

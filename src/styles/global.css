@@ -208,7 +208,7 @@
 				border-color: oklch(from var(--colorSuc) l c h / 0.5);
 			}
 
-			:not(form:has(output[data-status="completed"])) &:user-invalid {
+			&:user-invalid {
 				border-color: oklch(from var(--colorErr) l c h / 0.5);
 			}
 		}
@@ -284,7 +284,7 @@
 			display: block;
 			text-align: center;
 
-			form:has(:invalid) & {
+			form:has(:invalid, [data-status="processing"], [data-status="completed"]) & {
 				opacity: 0.5;
 				pointer-events: none;
 			}
