@@ -43,8 +43,20 @@ const { frontmatter } = Astro.props;
 				border-radius: var(--borderRadius);
 			}
 
-			p {
-				font-size: var(--fs-3);
+			hgroup {
+				display: grid;
+				place-items: start;
+				gap: 2rem;
+			}
+
+			p:has(time) {
+				display: inline-block;
+				background: oklch(from var(--colorSuc) l c h / 0.15);
+				color: var(--colorSuc);
+				border-radius: var(--borderRadius);
+				font-weight: 900;
+				padding-inline: 0.3em;
+				padding-block: 0.15em;
 			}
 		}
 
@@ -81,10 +93,6 @@ const { frontmatter } = Astro.props;
 		}
 		h4 {
 			font-size: var(--fs-2);
-		}
-
-		header + p {
-			font-size: var(--fs-3);
 		}
 
 		hr {

@@ -91,7 +91,7 @@
 		--colorErr: oklch(0.6281 0.2577 29.23);
 
 		--canvasColor: oklch(0.22 0.0059 236.81);
-		--canvasText: oklch(1 0 0);
+		--canvasText: oklch(0.9 0 0);
 
 		--borderWidth: 0.16rem;
 		--borderStyle: Solid;
@@ -130,6 +130,7 @@
 			oklch(from var(--canvasColor) l c h);
 		font-size: var(--fs-2);
 		font-family: suse, system-ui;
+		color: var(--canvasText);
 	}
 
 	:is(.button, button) {
