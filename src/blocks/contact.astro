@@ -39,6 +39,7 @@
 				statusMessage.value = result.message;
 				setTimeout(() => {
 					contact.reset();
+					statusMessage.removeAttribute("data-status");
 				}, 3000);
 			} else {
 				statusMessage.setAttribute("data-status", "error");
