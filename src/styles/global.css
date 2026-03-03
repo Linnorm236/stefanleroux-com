@@ -132,7 +132,7 @@
 		font-family: suse, system-ui;
 	}
 
-	:is(.button, button, input, textarea) {
+	:is(.button, button) {
 		display: inline-grid;
 		grid: auto / auto 1fr;
 		align-items: center;
@@ -149,7 +149,7 @@
 		}
 
 		&:hover,
-		&:focus-within {
+		&:focus-visible {
 			background: oklch(from var(--colorPri) l c h / 0.2);
 			border-color: oklch(from var(--colorPri) l c h / 0.5);
 		}
@@ -164,6 +164,129 @@
 				transition:
 					border-color 0.05s ease-in-out,
 					background 0.15s ease-in-out;
+			}
+		}
+	}
+
+	form {
+		--padding-inline: 1.25rem;
+		--padding-block: 0.75rem;
+		background: var(--blockColor);
+		padding-inline: 3rem;
+		padding-block: 3rem;
+		display: grid;
+		gap: 3rem;
+		inline-size: min(400px, 100% - 5rem);
+		border-radius: var(--borderRadius);
+		border: var(--blockBorder);
+
+		:is(input, textarea, span) {
+			padding-inline: var(--padding-inline);
+			padding-block: var(--padding-block);
+			font-size: var(--fs-1);
+			display: block;
+			border-radius: var(--borderRadius);
+		}
+
+		:is(input, textarea) {
+			inline-size: 100%;
+			background: oklch(from var(--blockColor) 0.175 c h);
+			border: var(--buttonBorder);
+			border-radius: var(--borderRadius);
+			outline: unset;
+
+			&::placeholder {
+				opacity: 0;
+			}
+
+			&:not(:valid):hover,
+			&:not(:valid):focus {
+				border-color: oklch(from var(--colorPri) l c h / 0.5);
+			}
+
+			&:valid {
+				border-color: oklch(from var(--colorSuc) l c h / 0.5);
+			}
+
+			&:user-invalid {
+				border-color: oklch(from var(--colorErr) l c h / 0.5);
+			}
+		}
+
+		span {
+			position: absolute;
+			border: 2px solid transparent;
+			z-index: 1;
+			opacity: 0.6;
+			border-radius: var(--borderRadius);
+
+			@media (prefers-reduced-motion: no-preference) {
+				& {
+					transition:
+						all 0.2s 0s ease-in-out,
+						background 0.2s -0.05s ease-in-out;
+				}
+			}
+
+			&:has(+ :is(input, textarea):focus-visible),
+			&:has(+ :is(input, textarea):not(:placeholder-shown)) {
+				translate: calc(var(--padding-inline) - 0.5rem) -75%;
+				font-size: 1.5rem;
+				padding-inline: 0.5rem;
+				padding-block: 0.1rem;
+				line-height: 1;
+				background: oklch(from var(--colorPri) l c h / 0.7);
+				backdrop-filter: blur(5px);
+				color: var(--canvasText);
+				opacity: 1;
+
+				@media (prefers-reduced-motion: no-preference) {
+					& {
+						transition:
+							all 0.2s 0s ease-in-out,
+							background 0.2s 0.05s ease-in-out;
+					}
+				}
+			}
+		}
+
+		textarea {
+			resize: vertical;
+			block-size: calc(5lh + (1.15rem * 2) + (var(--borderWidth) * 2));
+		}
+
+		output {
+			--color: var(--canvasText);
+			padding-inline: var(--padding-inline);
+			padding-block: var(--padding-block);
+			border-radius: var(--borderRadius);
+			color: var(--color);
+			background: oklch(from var(--color) l c h / 0.2);
+			border: var(--blockBorder);
+			border-color: var(--color);
+			font-size: var(--fs-0);
+
+			&:empty {
+				display: none;
+			}
+			&[data-status="processing"] {
+				--color: var(--colorPri);
+			}
+			&[data-status="error"] {
+				--color: var(--colorErr);
+			}
+			&[data-status="completed"] {
+				--color: var(--colorSuc);
+			}
+		}
+
+		button[type="submit"] {
+			display: block;
+			text-align: center;
+
+			form:has(:invalid) & {
+				opacity: 0.5;
+				pointer-events: none;
 			}
 		}
 	}
