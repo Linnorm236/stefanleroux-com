@@ -1,22 +1,15 @@
 <form popover id="contact">
-	<label for="your-name">
+	<label>
 		<span>Name</span>
-		<input id="your-name" name="your-name" type="text" placeholder="Name" autocomplete="false" required />
+		<input name="your-name" type="text" placeholder="Name" autocomplete="false" required />
 	</label>
-	<label for="your-email">
+	<label>
 		<span>Email</span>
-		<input
-			id="your-email"
-			name="your-email"
-			type="email"
-			autocomplete="true"
-			required
-			placeholder="user@domain.name"
-		/>
+		<input name="your-email" type="email" placeholder="user@domain.name" autocomplete="false" required />
 	</label>
-	<label for="your-message">
+	<label>
 		<span>Message</span>
-		<textarea id="your-message" name="your-message" placeholder="Message" required></textarea>
+		<textarea name="your-message" placeholder="Message" required></textarea>
 	</label>
 	<input type="hidden" name="_wpcf7_unit_tag" value="wpcf7-f20-p13-o1" />
 	<output id="statusMessage"></output>
@@ -35,7 +28,7 @@
 				"https://lab.vivtec.co.za/forms/wp-json/contact-form-7/v1/contact-forms/20/feedback",
 				{
 					method: "POST",
-					body: new FormData(formContact),
+					body: new FormData(contact),
 				},
 			);
 
