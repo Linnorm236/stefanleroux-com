@@ -8,7 +8,7 @@ const posts = (await getCollection("blog")).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
 
-const title = "Blogs";
+const title = "Blog";
 const description = "My Description";
 const image = "../images/favicon.svg";
 ---
@@ -16,7 +16,7 @@ const image = "../images/favicon.svg";
 <LayoutDefault title={title} description={description} image={image}>
 	<section>
 		<h1>Welcome to my online digital notebook</h1>
-		<ul class="blogs" role="list">
+		<ul class="posts" role="list">
 			{
 				posts.map((post) => (
 					<li>
@@ -40,7 +40,7 @@ const image = "../images/favicon.svg";
 </LayoutDefault>
 
 <style>
-	.blogs {
+	.posts {
 		display: grid;
 		grid: auto / repeat(auto-fill, minmax(min(280px, 100%), 1fr));
 		gap: 3rem;
