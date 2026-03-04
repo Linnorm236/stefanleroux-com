@@ -18,7 +18,7 @@ const { title, description, image = "favicon.svg" } = Astro.props;
 		<nav>
 			<div class="sticky">
 				<div class="profile">
-					<img src="" alt="SR" />
+					<div>SR</div>
 				</div>
 				<ul role="menu">
 					<li role="menuitem">
@@ -205,16 +205,17 @@ const { title, description, image = "favicon.svg" } = Astro.props;
 			padding-inline: var(--paddingInline);
 			inline-size: 250px;
 
-			& > img {
-				width: 100%;
-				margin-inline: auto;
+			& > :is(img, div) {
+				inline-size: 100%;
 				aspect-ratio: 1;
 				object-fit: cover;
-				color: oklch(from #02b787 l c h / 1);
-				font-size: 10rem;
 				background: oklch(from #02b787 l c h / 0.3);
 				border-radius: 50%;
 				border: solid 0.15rem oklch(from #02b787 l c h / 1);
+				color: oklch(from #02b787 l c h / 1);
+				font-size: 10rem;
+				text-align: center;
+				align-content: center;
 			}
 		}
 
