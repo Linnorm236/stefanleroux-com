@@ -1,7 +1,7 @@
 <div class="contact">
 	<a class="button icon_edit-download" href="/docs/stefanleroux.pdf" download="stefanleroux-cv">Résumé</a>
-	<button class="icon_mail-send" popovertarget="contact">Contact</button>
-	<form popover id="contact">
+	<button class="icon_mail-send" popovertarget="contactForm">Contact</button>
+	<form popover id="contactForm">
 		<label>
 			<span>Name</span>
 			<input name="your-name" type="text" placeholder="Name" autocomplete="false" required />
@@ -20,45 +20,7 @@
 	</form>
 </div>
 
-<script is:inline>
-	contact.onsubmit = async (e) => {
-		e.preventDefault();
-
-		statusMessage.setAttribute("data-status", "processing");
-		statusMessage.value = "Processing";
-
-		try {
-			let response = await fetch(
-				"https://lab.vivtec.co.za/forms/wp-json/contact-form-7/v1/contact-forms/20/feedback",
-				{
-					method: "POST",
-					body: new FormData(contact),
-				},
-			);
-
-			let result = await response.json();
-
-			if (result.status === "mail_sent") {
-				statusMessage.setAttribute("data-status", "completed");
-				statusMessage.value = result.message;
-				setTimeout(() => {
-					contact.reset();
-					statusMessage.removeAttribute("data-status");
-				}, 3000);
-			} else {
-				statusMessage.setAttribute("data-status", "error");
-				statusMessage.value = "You made a mistake";
-			}
-		} catch (error) {
-			statusMessage.setAttribute("data-status", "error");
-			statusMessage.value = "Form doesn't do anything yet";
-
-			if (error instanceof TypeError) {
-				statusMessage.value = "Fucking CORS";
-			}
-		}
-	};
-</script>
+<script src="../scripts/forms.ts"></script>
 
 <style>
 	.contact {
@@ -71,7 +33,7 @@
 		}
 	}
 
-	form {
+	#contactForm {
 		display: none;
 		opacity: 0;
 		inline-size: min(400px, 100% - 5rem);
