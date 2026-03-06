@@ -19,7 +19,7 @@ const image = "../images/favicon.svg";
 		<ul class="posts" role="list">
 			{
 				posts.map((post) => (
-					<li>
+					<li role="listitem">
 						<article>
 							<Image src={post.data.image as any} format="avif" layout="constrained" alt={post.data.alt} />
 							<hgroup>
