@@ -1,0 +1,34 @@
+---
+// src/components/NavigationList.astro
+
+interface Props {
+	ariaHidden?: boolean;
+}
+
+const { ariaHidden } = Astro.props;
+---
+
+<ul role="list" aria-hidden={ariaHidden}>
+	<li role="listitem"><a href="/blog/welcome/">New blog released</a></li>
+</ul>
+
+<style>
+	ul {
+		display: flex;
+		justify-content: space-around;
+		gap: 2em;
+		min-inline-size: 100%;
+		padding-inline: 1em;
+		animation: slider 15s linear 0s infinite normal forwards;
+
+		li {
+			text-wrap: nowrap;
+		}
+	}
+
+	@keyframes slider {
+		to {
+			translate: -100% 0%;
+		}
+	}
+</style>
