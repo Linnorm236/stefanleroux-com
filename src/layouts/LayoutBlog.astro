@@ -12,12 +12,12 @@ const { frontmatter } = Astro.props;
 			<Image src={frontmatter.image} alt={frontmatter.alt} format="avif" layout="constrained" priority />
 			<hgroup>
 				<h1>{frontmatter.title}</h1>
-				<p>
+				<span>
 					Published:
 					<time class="block" datetime={frontmatter.pubDate.toISOString().split("T")[0]}>
 						{frontmatter.pubDate.toISOString().split("T")[0]}
 					</time>
-				</p>
+				</span>
 			</hgroup>
 		</header>
 		<slot />
@@ -26,11 +26,10 @@ const { frontmatter } = Astro.props;
 
 <style>
 	article {
-		inline-size: min(1000px, 100% - 2.5em);
+		inline-size: min(1000px, 95%);
 		margin-inline: auto;
-		margin-block: 1.25em;
-		padding-block: 2.5rem;
-		padding-inline: 2.5rem;
+		padding-block: 1em;
+		padding-inline: 1em;
 		background: var(--blockColor);
 		border: var(--blockBorder);
 		border-radius: var(--borderRadius);
@@ -53,7 +52,8 @@ const { frontmatter } = Astro.props;
 				gap: 2rem;
 			}
 
-			p:has(time) {
+			span:has(time) {
+				font-size: var(--fs-1);
 				display: inline-block;
 				background: oklch(from var(--colorSuc) l c h / 0.15);
 				color: var(--colorSuc);

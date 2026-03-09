@@ -2,6 +2,7 @@
 import Meta from "../blocks/meta.astro";
 import Link from "../blocks/link.astro";
 import Contact from "../blocks/contact.astro";
+import Notice from "../blocks/notice.astro";
 
 const { pathname } = Astro.url;
 
@@ -52,6 +53,13 @@ const { title, description, image = "favicon.svg" } = Astro.props;
 		<main>
 			<slot />
 		</main>
+		<aside>
+			<span>Notice:</span>
+			<div class="notice">
+				<Notice />
+				<Notice ariaHidden={true} />
+			</div>
+		</aside>
 		<footer>test</footer>
 	</body>
 </html>
@@ -64,9 +72,10 @@ const { title, description, image = "favicon.svg" } = Astro.props;
 			min-block-size: 100svh;
 			display: grid;
 			grid:
-				"nav head" auto
+				"nav aside" auto
 				"nav main" 1fr
 				"nav foo" auto / minmax(0, 250px) minmax(0, 1fr);
+			gap: 2rem 0rem;
 
 			& > nav {
 				grid-area: nav;
@@ -74,6 +83,10 @@ const { title, description, image = "favicon.svg" } = Astro.props;
 
 			& > main {
 				grid-area: main;
+			}
+
+			& > aside {
+				grid-area: aside;
 			}
 
 			& > footer {
@@ -97,6 +110,7 @@ const { title, description, image = "favicon.svg" } = Astro.props;
 					}
 
 					main,
+					aside,
 					footer {
 						transition: filter var(--timing) var(--easing);
 						width: 100vw;
@@ -114,8 +128,9 @@ const { title, description, image = "favicon.svg" } = Astro.props;
 					}
 
 					main,
+					aside,
 					footer {
-						filter: grayscale(100%) brightness(50%);
+						filter: blur(2px);
 						transition-timing-function: ease-in-out;
 						transition-duration: 0.2s;
 					}
@@ -227,6 +242,40 @@ const { title, description, image = "favicon.svg" } = Astro.props;
 				gap: 1.5rem;
 				align-items: stretch;
 				font-size: var(--fontSize);
+			}
+		}
+
+		aside {
+			background: var(--blockColor);
+			padding-inline: 1em;
+			padding-block: 0.5em;
+			font-size: var(--fs-1);
+			display: flex;
+			isolation: isolate;
+			border: var(--blockBorder);
+			border-inline: unset;
+			position: sticky;
+			inset: 0 auto auto auto;
+
+			.notice {
+				flex: 1 0 0;
+				display: flex;
+				position: relative;
+				overflow-x: clip;
+
+				&::after {
+					content: "";
+					pointer-events: none;
+					position: absolute;
+					inset: 0;
+					background: linear-gradient(
+						90deg,
+						var(--blockColor) 1%,
+						transparent 5%,
+						transparent 95%,
+						var(--blockColor) 99%
+					);
+				}
 			}
 		}
 	}
