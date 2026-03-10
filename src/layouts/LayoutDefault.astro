@@ -54,10 +54,12 @@ const { title, description, image = "favicon.svg" } = Astro.props;
 			<slot />
 		</main>
 		<aside>
-			<span>Notice:</span>
+			<span>Notices:</span>
 			<div class="notice">
-				<Notice />
-				<Notice ariaHidden={true} />
+				<div class="slider">
+					<Notice />
+					<Notice ariaHidden={true} />
+				</div>
 			</div>
 		</aside>
 		<footer>test</footer>
@@ -203,7 +205,7 @@ const { title, description, image = "favicon.svg" } = Astro.props;
 			z-index: 1;
 			isolation: isolate;
 			background: var(--blockColor);
-			box-shadow: inset calc(var(--borderWidth) * -1) 0 0 0 var(--borderColor);
+			border-inline-end: var(--blockBorder);
 
 			.sticky {
 				position: sticky;
@@ -247,35 +249,34 @@ const { title, description, image = "favicon.svg" } = Astro.props;
 
 		aside {
 			background: var(--blockColor);
+			border: var(--blockBorder);
 			padding-inline: 1em;
 			padding-block: 0.5em;
-			font-size: var(--fs-1);
-			display: flex;
-			isolation: isolate;
-			border: var(--blockBorder);
 			border-inline: unset;
-			position: sticky;
-			inset: 0 auto auto auto;
+			overflow-x: clip;
+			display: grid;
+			grid: auto / auto 100%;
+			place-items: center stretch;
+			font-size: var(--fs-1);
+
+			span {
+				font-size: var(--fs-2);
+			}
 
 			.notice {
-				flex: 1 0 0;
-				display: flex;
-				position: relative;
-				overflow-x: clip;
+				mask: linear-gradient(90deg, transparent 0.25em, canvas 5%);
+			}
 
-				&::after {
-					content: "";
-					pointer-events: none;
-					position: absolute;
-					inset: 0;
-					background: linear-gradient(
-						90deg,
-						var(--blockColor) 1%,
-						transparent 5%,
-						transparent 95%,
-						var(--blockColor) 99%
-					);
-				}
+			.slider {
+				display: grid;
+				grid: "stacked";
+				animation: slider 10s linear 0s infinite normal forwards;
+			}
+		}
+
+		@keyframes slider {
+			to {
+				translate: -100% 0%;
 			}
 		}
 	}

@@ -9,26 +9,33 @@ const { ariaHidden } = Astro.props;
 ---
 
 <ul role="list" aria-hidden={ariaHidden}>
-	<li role="listitem"><a href="/blog/welcome/">New blog released</a></li>
+	<li role="listitem"><a href="/blog/welcome/">Read 'welcome' post</a></li>
 </ul>
 
 <style>
 	ul {
+		grid-area: stacked;
 		display: flex;
-		justify-content: space-around;
-		gap: 2em;
-		min-inline-size: 100%;
-		padding-inline: 1em;
-		animation: slider 15s linear 0s infinite normal forwards;
+		gap: 10em;
+		font-size: var(--fs-0);
+		padding-inline: 5em;
+
+		&[aria-hidden="true"] {
+			translate: 100% 0%;
+		}
 
 		li {
+			flex-grow: 1;
 			text-wrap: nowrap;
+			line-height: 1.5lh;
+			font-weight: bold;
+			text-transform: uppercase;
 		}
-	}
 
-	@keyframes slider {
-		to {
-			translate: -100% 0%;
+		li:has(a) {
+			text-decoration: underline;
+			text-decoration-style: dashed;
+			text-underline-offset: 0.2lh;
 		}
 	}
 </style>
