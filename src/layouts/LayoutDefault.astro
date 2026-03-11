@@ -53,231 +53,202 @@ const { title, description, image = "favicon.svg" } = Astro.props;
 		<main>
 			<slot />
 		</main>
-		<aside>
-			<span>Notices:</span>
-			<div class="notice">
-				<div class="slider">
-					<Notice />
-					<Notice ariaHidden={true} />
-				</div>
-			</div>
-		</aside>
+		<header>
+			<Notice />
+		</header>
 		<footer>test</footer>
 	</body>
 </html>
 
 <style>
-	@layer layouts {
-		body {
-			--timing: 0.5s;
-			--easing: cubic-bezier(0.8, -0.4, 0.5, 1);
-			min-block-size: 100svh;
-			display: grid;
-			grid:
-				"nav aside" auto
-				"nav main" 1fr
-				"nav foo" auto / minmax(0, 250px) minmax(0, 1fr);
-			gap: 2rem 0rem;
+	body {
+		--timing: 0.5s;
+		--easing: cubic-bezier(0.8, -0.4, 0.5, 1);
+		min-block-size: 100svh;
+		display: grid;
+		grid:
+			"nav head" auto
+			"nav main" 1fr
+			"nav foo" auto / minmax(0, 250px) minmax(0, 1fr);
+		gap: 2rem 0rem;
 
-			& > nav {
-				grid-area: nav;
-			}
+		& > nav {
+			grid-area: nav;
+		}
 
-			& > main {
-				grid-area: main;
-			}
+		& > main {
+			grid-area: main;
+		}
 
-			& > aside {
-				grid-area: aside;
-			}
+		& > header {
+			grid-area: head;
+		}
 
-			& > footer {
-				grid-area: foo;
-			}
+		& > footer {
+			grid-area: foo;
+		}
 
-			& > :is(label[for="menu"], input[name="menu"]) {
-				display: none;
-			}
+		& > :is(label[for="menu"], input[name="menu"]) {
+			display: none;
+		}
 
-			@media (width <= 900px) {
-				& {
-					overflow-x: clip;
-					grid-template-columns: minmax(0, 0) minmax(0, 1fr);
-					transition: grid-template-columns var(--timing) var(--easing);
+		@media (width <= 900px) {
+			& {
+				overflow-x: clip;
+				grid-template-columns: minmax(0, 0) minmax(0, 1fr);
+				transition: grid-template-columns var(--timing) var(--easing);
 
-					nav {
-						content-visibility: hidden;
-						transition-behavior: allow-discrete;
-						transition-delay: 0.5s;
-					}
-
-					main,
-					aside,
-					footer {
-						transition: filter var(--timing) var(--easing);
-						width: 100vw;
-					}
+				nav {
+					content-visibility: hidden;
+					transition-behavior: allow-discrete;
+					transition-delay: 0.5s;
 				}
 
-				&:has(> label[for="menu"] > input#menu:checked) {
-					grid-template-columns: minmax(0, 250px) minmax(0, 1fr);
+				main,
+				header,
+				footer {
+					transition: filter var(--timing) var(--easing);
+					width: 100vw;
+				}
+			}
+
+			&:has(> label[for="menu"] > input#menu:checked) {
+				grid-template-columns: minmax(0, 250px) minmax(0, 1fr);
+				transition-timing-function: ease-in-out;
+				transition-duration: 0.2s;
+
+				nav {
+					content-visibility: visible;
+					transition-delay: 0s;
+				}
+
+				main,
+				header,
+				footer {
+					filter: blur(2px);
 					transition-timing-function: ease-in-out;
 					transition-duration: 0.2s;
-
-					nav {
-						content-visibility: visible;
-						transition-delay: 0s;
-					}
-
-					main,
-					aside,
-					footer {
-						filter: blur(2px);
-						transition-timing-function: ease-in-out;
-						transition-duration: 0.2s;
-					}
 				}
+			}
 
-				& > label[for="menu"] {
+			& > label[for="menu"] {
+				display: block;
+				position: fixed;
+				inset: auto 0 0 auto;
+				font-family: icons;
+				z-index: 1;
+
+				& > input#menu {
 					display: block;
 					position: fixed;
+					width: 0;
+					height: 0;
+					opacity: 0;
+				}
+
+				&::before {
+					display: block;
+					padding: var(--paddingGap);
+					background: var(--buttonColor);
+					border: var(--buttonBorder);
+					border-radius: var(--borderRadius);
+					font-size: 3.5rem;
+					line-height: 1;
+					translate: -2rem -2rem;
+					backdrop-filter: blur(5px);
+				}
+
+				&:hover::before,
+				&:focus-within::before {
+					background: oklch(from var(--colorPri) l c h / 0.5);
+					border-color: oklch(from var(--colorPri) l c h / 1);
+				}
+
+				&:has(> input#menu:checked)::before {
+					background: oklch(from var(--colorPri) l c h / 0.8);
+					border-color: oklch(from var(--colorPri) l c h / 1);
+				}
+
+				&:has(> input#menu:checked):focus::before {
+					background: oklch(from var(--colorPri) l c h / 0.2);
+					border-color: oklch(from var(--colorPri) l c h / 0.5);
+				}
+
+				&::after {
+					display: none;
+					content: "";
+					position: fixed;
 					inset: auto 0 0 auto;
-					font-family: icons;
-					z-index: 1;
+					inline-size: 100vw;
+					block-size: 100vh;
+					z-index: -1;
+				}
 
-					& > input#menu {
-						display: block;
-						position: fixed;
-						width: 0;
-						height: 0;
-						opacity: 0;
-					}
-
-					&::before {
-						display: block;
-						padding: var(--paddingGap);
-						background: var(--buttonColor);
-						border: var(--buttonBorder);
-						border-radius: var(--borderRadius);
-						font-size: 3.5rem;
-						line-height: 1;
-						translate: -2rem -2rem;
-						backdrop-filter: blur(5px);
-					}
-
-					&:hover::before,
-					&:focus-within::before {
-						background: oklch(from var(--colorPri) l c h / 0.5);
-						border-color: oklch(from var(--colorPri) l c h / 1);
-					}
-
-					&:has(> input#menu:checked)::before {
-						background: oklch(from var(--colorPri) l c h / 0.8);
-						border-color: oklch(from var(--colorPri) l c h / 1);
-					}
-
-					&:has(> input#menu:checked):focus::before {
-						background: oklch(from var(--colorPri) l c h / 0.2);
-						border-color: oklch(from var(--colorPri) l c h / 0.5);
-					}
-
-					&::after {
-						display: none;
-						content: "";
-						position: fixed;
-						inset: auto 0 0 auto;
-						inline-size: 100vw;
-						block-size: 100vh;
-						z-index: -1;
-					}
-
-					&:has(> input#menu:checked)::after {
-						display: block;
-					}
+				&:has(> input#menu:checked)::after {
+					display: block;
 				}
 			}
 		}
+	}
 
-		nav {
-			--paddingInline: 3rem;
-			--fontSize: 2.5rem;
-			position: relative;
-			z-index: 1;
-			isolation: isolate;
-			background: var(--blockColor);
-			border-inline-end: var(--blockBorder);
+	nav {
+		--paddingInline: 3rem;
+		--fontSize: 2.5rem;
+		position: relative;
+		z-index: 1;
+		isolation: isolate;
+		background: var(--blockColor);
+		border-inline-end: var(--blockBorder);
 
-			.sticky {
-				position: sticky;
-				inset: 0 0 auto auto;
-				height: 100dvh;
-				overflow: clip auto;
-				display: grid;
-				grid: auto 1fr auto / auto;
-				place-content: start;
-				gap: 3rem;
-				padding-block: 3rem;
-			}
-
-			.profile {
-				padding-inline: var(--paddingInline);
-				inline-size: 250px;
-
-				& > :is(img, div) {
-					inline-size: 100%;
-					aspect-ratio: 1;
-					object-fit: cover;
-					background: oklch(from #02b787 l c h / 0.3);
-					border-radius: 50%;
-					border: solid 0.15rem oklch(from #02b787 l c h / 1);
-					color: oklch(from #02b787 l c h / 1);
-					font-size: 10rem;
-					text-align: center;
-					align-content: center;
-				}
-			}
-
-			ul {
-				padding-inline: var(--paddingInline);
-				display: flex;
-				flex-flow: column nowrap;
-				gap: 1.5rem;
-				align-items: stretch;
-				font-size: var(--fontSize);
-			}
-		}
-
-		aside {
-			background: var(--blockColor);
-			border: var(--blockBorder);
-			padding-inline: 1em;
-			padding-block: 0.5em;
-			border-inline: unset;
-			overflow-x: clip;
+		.sticky {
+			position: sticky;
+			inset: 0 0 auto auto;
+			height: 100dvh;
+			overflow: clip auto;
 			display: grid;
-			grid: auto / auto 100%;
-			place-items: center stretch;
-			font-size: var(--fs-1);
+			grid: auto 1fr auto / auto;
+			place-content: start;
+			gap: 3rem;
+			padding-block: 3rem;
+		}
 
-			span {
-				font-size: var(--fs-2);
-			}
+		.profile {
+			padding-inline: var(--paddingInline);
+			inline-size: 250px;
 
-			.notice {
-				mask: linear-gradient(90deg, transparent 0.25em, canvas 5%);
-			}
-
-			.slider {
-				display: grid;
-				grid: "stacked";
-				animation: slider 10s linear 0s infinite normal forwards;
+			& > :is(img, div) {
+				inline-size: 100%;
+				aspect-ratio: 1;
+				object-fit: cover;
+				background: oklch(from #02b787 l c h / 0.3);
+				border-radius: 50%;
+				border: solid 0.15rem oklch(from #02b787 l c h / 1);
+				color: oklch(from #02b787 l c h / 1);
+				font-size: 10rem;
+				text-align: center;
+				align-content: center;
 			}
 		}
 
-		@keyframes slider {
-			to {
-				translate: -100% 0%;
-			}
+		ul {
+			padding-inline: var(--paddingInline);
+			display: flex;
+			flex-flow: column nowrap;
+			gap: 1.5rem;
+			align-items: stretch;
+			font-size: var(--fontSize);
 		}
+	}
+
+	header {
+		background: var(--blockColor);
+		border: var(--blockBorder);
+		padding-inline: 1em;
+		padding-block: 0.5em;
+		border-inline: unset;
+		font-size: var(--fs-1);
+		text-align: center;
+		position: sticky;
+		inset: 0 0 auto 0;
 	}
 </style>
