@@ -54,19 +54,11 @@
 		transform-origin: center;
 	}
 
-	:where([popover]) {
+	:where(:popover-open) {
 		margin: auto;
 		padding: unset;
 		border: unset;
 		background: unset;
-	}
-
-	:where(h1, h2, h3, h4, h5, h6) {
-		text-wrap: balance;
-	}
-
-	:where(p) {
-		text-wrap: pretty;
 	}
 
 	@media (prefers-reduced-motion: no-preference) {

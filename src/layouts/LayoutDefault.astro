@@ -243,12 +243,14 @@ const { title, description, image = "favicon.svg" } = Astro.props;
 	header {
 		background: var(--blockColor);
 		border: var(--blockBorder);
+		border-inline: unset;
+		border-block-start: unset;
 		padding-inline: 1em;
 		padding-block: 0.5em;
-		border-inline: unset;
 		font-size: var(--fs-1);
 		text-align: center;
 		position: sticky;
-		inset: 0 0 auto 0;
+		inset: 0 auto auto auto;
+		translate: 0 -3px;
 	}
 </style>
