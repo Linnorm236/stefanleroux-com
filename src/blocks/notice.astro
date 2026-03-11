@@ -1,41 +1,22 @@
----
-// src/components/NavigationList.astro
-
-interface Props {
-	ariaHidden?: boolean;
-}
-
-const { ariaHidden } = Astro.props;
----
-
-<ul role="list" aria-hidden={ariaHidden}>
-	<li role="listitem"><a href="/blog/welcome/">Read 'welcome' post</a></li>
-</ul>
+<a href="/blog/welcome/">
+	<span> &#40;&gt;&#39;&#46;&#39;&#41;&gt;</span>
+	Read `welcome` post
+	<span>&lt;&#40;&#39;&#46;&#39;&lt;&#41;</span>
+</a>
 
 <style>
-	ul {
-		grid-area: stacked;
-		display: flex;
-		gap: 10em;
-		font-size: var(--fs-0);
-		padding-inline: 5em;
+	a {
+		text-decoration: underline;
+		text-decoration-style: solid;
+		text-underline-offset: 0.2lh;
+		transition: font-variation-settings 0.2s ease-in-out;
 
-		&[aria-hidden="true"] {
-			translate: 100% 0%;
+		span {
+			font-size: var(--fs-0);
 		}
 
-		li {
-			flex-grow: 1;
-			text-wrap: nowrap;
-			line-height: 1.5lh;
-			font-weight: bold;
-			text-transform: uppercase;
-		}
-
-		li:has(a) {
-			text-decoration: underline;
-			text-decoration-style: dashed;
-			text-underline-offset: 0.2lh;
+		&:hover {
+			font-variation-settings: "wght" 700;
 		}
 	}
 </style>
