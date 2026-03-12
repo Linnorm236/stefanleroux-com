@@ -9,10 +9,7 @@ const { frontmatter, headings } = Astro.props;
 
 <LayoutDefault title={frontmatter.title} description={frontmatter.description} image={frontmatter.image?.src}>
 	<section>
-		<aside>
-			<Toc headings={headings} />
-		</aside>
-		<article class="blog">
+		<article>
 			<header>
 				<Image src={frontmatter.image} alt={frontmatter.alt} format="avif" layout="constrained" priority />
 				<hgroup>
@@ -25,70 +22,93 @@ const { frontmatter, headings } = Astro.props;
 					</span>
 				</hgroup>
 			</header>
-			<slot />
+			<aside class="toc">
+				<Toc headings={headings} />
+			</aside>
+			<div class="contents">
+				<slot />
+			</div>
+			<footer class="author">Author</footer>
 		</article>
+		<aside class="related">Content coming soon</aside>
 	</section>
 </LayoutDefault>
 
 <style>
 	section {
-		inline-size: min(1200px, 95%);
-		margin-inline: auto;
 		display: grid;
-		grid: "article aside" auto / 1fr 400px;
+		grid: "article aside" auto / 4fr 1fr;
+		gap: 2rem;
+		align-items: start;
 
-		@media (width <= 1100px) {
+		@media (width <= 1400px) {
 			& {
 				grid:
-					"aside" auto
-					"article" auto / 1fr;
+					"article" auto
+					"aside" auto / 1fr;
 			}
 		}
 	}
 
-	aside {
-		grid-area: aside;
-		inline-size: min(400px, 100%);
-		margin-inline: auto;
-	}
-
 	article {
-		grid-area: article;
 		padding-block: 1em;
 		padding-inline: 1em;
 		background: var(--blockColor);
 		border: var(--blockBorder);
 		border-radius: var(--borderRadius);
+		display: grid;
+		grid:
+			"head head" auto
+			"slot toc" auto
+			"foo foo" auto / 1fr 300px;
+		gap: 2.25em 1em;
 
-		> header {
-			margin-block-end: 2.5em;
-			display: grid;
-			gap: 1em;
-
-			img {
-				inline-size: 100%;
-				aspect-ratio: 16 / 10;
-				object-fit: cover;
-				border-radius: var(--borderRadius);
-			}
-
-			hgroup {
-				display: grid;
-				place-items: start;
-				gap: 2rem;
-			}
-
-			span:has(time) {
-				font-size: var(--fs-1);
-				display: inline-block;
-				background: oklch(from var(--colorSuc) l c h / 0.15);
-				color: var(--colorSuc);
-				border-radius: var(--borderRadius);
-				font-variation-settings: "wght" 700;
-				padding-inline: 0.3em;
-				padding-block: 0.15em;
+		@media (width <= 1100px) {
+			& {
+				grid:
+					"head" auto
+					"toc" auto
+					"slot" auto
+					"foo" auto / 1fr;
 			}
 		}
+	}
+
+	header {
+		grid-area: head;
+		display: grid;
+		gap: 1em;
+
+		img {
+			inline-size: 100%;
+			aspect-ratio: 16 / 9;
+			object-fit: cover;
+			border-radius: var(--borderRadius);
+		}
+
+		hgroup {
+			display: grid;
+			place-items: start;
+			gap: 2rem;
+			text-transform: uppercase;
+			text-wrap: balance;
+		}
+
+		span:has(time) {
+			font-size: var(--fs-1);
+			display: inline-block;
+			background: oklch(from var(--colorSuc) l c h / 0.15);
+			color: var(--colorSuc);
+			border-radius: var(--borderRadius);
+			font-variation-settings: "wght" 700;
+			padding-inline: 0.3em;
+			padding-block: 0.15em;
+		}
+	}
+
+	.contents {
+		grid-area: slot;
+		font-size: var(--fs-1);
 
 		> *:not(:where(:last-child)) {
 			margin-block-end: 1em;
@@ -110,11 +130,10 @@ const { frontmatter, headings } = Astro.props;
 			margin-block-start: 0.5em;
 		}
 
-		:is(h1, h2, h3, h4, h5, h6) {
+		:is(h2, h3, h4, h5, h6) {
 			text-transform: uppercase;
 			line-height: 1.1;
-			text-wrap: balance;
-			scroll-margin-top: calc(1.5lh + 2rem);
+			scroll-margin-top: calc(1.5lh + 0.5rem);
 		}
 
 		h1 {
@@ -141,7 +160,29 @@ const { frontmatter, headings } = Astro.props;
 			border-radius: 0.25em;
 			padding-inline: 0.35em;
 			padding-block: 0.125em;
-			font-size: var(--fs-1);
+			font-size: var(--fs-0);
 		}
+	}
+
+	.toc {
+		grid-area: toc;
+		inline-size: min(400px, 100%);
+		margin-inline: auto;
+	}
+
+	.author {
+		grid-area: foo;
+		background: oklch(from var(--blockColor) calc(l - 0.015) c h);
+		border: var(--blockBorder);
+		border-radius: var(--borderRadius);
+	}
+
+	.related {
+		padding-block: 1em;
+		padding-inline: 1em;
+		background: var(--blockColor);
+		border: var(--blockBorder);
+		border-radius: var(--borderRadius);
+		display: grid;
 	}
 </style>
