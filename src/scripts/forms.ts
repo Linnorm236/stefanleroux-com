@@ -18,6 +18,10 @@ contactForm.onsubmit = async (event) => {
 		if (result.status === "mail_sent") {
 			statusMessage.setAttribute("data-status", "completed");
 			statusMessage.value = result.message;
+			setTimeout(() => {
+				contactForm.reset();
+				statusMessage.removeAttribute("data-status");
+			}, 3000);
 		} else {
 			statusMessage.setAttribute("data-status", "error");
 			statusMessage.value = "You made a mistake";
