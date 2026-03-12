@@ -168,6 +168,11 @@
 		}
 	}
 
+	section {
+		inline-size: min(1400px, 95%);
+		margin-inline: auto;
+	}
+
 	form {
 		--paddingInline: 1.25rem;
 		--paddingBlock: 0.75rem;
@@ -290,13 +295,5 @@
 				pointer-events: none;
 			}
 		}
-	}
-
-	section {
-		inline-size: min(1200px, 90%);
-		margin-inline: auto;
-		content-visibility: auto;
-		display: grid;
-		gap: 1em;
 	}
 }
