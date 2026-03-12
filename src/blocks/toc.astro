@@ -38,9 +38,13 @@ const filteredHeadings = headings.filter((heading) => heading.depth <= 2);
 		background: oklch(from var(--blockColor) calc(l - 0.015) c h);
 
 		ul {
-			font-size: var(--fs-1);
+			font-size: var(--fs-0);
 			display: grid;
 			gap: 0.75em;
+
+			a::before {
+				font-size: var(--fs-2);
+			}
 		}
 
 		h2 {

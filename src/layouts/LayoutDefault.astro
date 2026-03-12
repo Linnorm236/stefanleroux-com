@@ -70,7 +70,7 @@ const { title, description, image = "favicon.svg" } = Astro.props;
 		grid:
 			"nav head" 1.5lh
 			"nav main" 1fr
-			"nav foo" auto / minmax(0, 250px) minmax(0, 1fr);
+			"nav foo" auto / minmax(0, 230px) minmax(0, 1fr);
 		gap: 2rem 0rem;
 
 		@media (width <= 900px) {
@@ -199,7 +199,7 @@ const { title, description, image = "favicon.svg" } = Astro.props;
 
 		.profile {
 			padding-inline: var(--paddingInline);
-			inline-size: 250px;
+			inline-size: 230px;
 
 			& > :is(img, div) {
 				inline-size: 100%;

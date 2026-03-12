@@ -142,6 +142,7 @@
 		border-radius: var(--borderRadius);
 		line-height: 1;
 		text-align: start;
+		align-items: center;
 
 		&[class*="icon"]::before {
 			font-family: "icons";
