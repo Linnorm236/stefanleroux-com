@@ -1,0 +1,51 @@
+---
+import type { MarkdownHeading } from "astro";
+
+interface Props {
+	headings: MarkdownHeading[];
+}
+
+const { headings } = Astro.props;
+
+const filteredHeadings = headings.filter((heading) => heading.depth <= 2);
+---
+
+<nav>
+	<h2>Table of Contents</h2>
+	<ul role="list">
+		{
+			filteredHeadings.map((heading) => (
+				<li>
+					<a class="button icon_gnumeric-link-internal" href={`#${heading.slug}`}>
+						{heading.text}
+					</a>
+				</li>
+			))
+		}
+	</ul>
+</nav>
+
+<style>
+	nav {
+		position: sticky;
+		inset: calc(1.5lh + 2rem) auto auto auto;
+		padding-block: 1em;
+		padding-inline: 1em;
+		background: var(--blockColor);
+		border: var(--blockBorder);
+		border-radius: var(--borderRadius);
+		display: grid;
+		gap: 0.75em;
+
+		ul {
+			font-size: var(--fs-1);
+			display: grid;
+			gap: 1rem;
+		}
+
+		h2 {
+			font-size: var(--fs-2);
+			line-height: 1.1;
+		}
+	}
+</style>

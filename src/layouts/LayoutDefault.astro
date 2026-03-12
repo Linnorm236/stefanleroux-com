@@ -68,7 +68,7 @@ const { title, description, image = "favicon.svg" } = Astro.props;
 		min-block-size: 100svh;
 		display: grid;
 		grid:
-			"nav head" auto
+			"nav head" 1.5lh
 			"nav main" 1fr
 			"nav foo" auto / minmax(0, 250px) minmax(0, 1fr);
 		gap: 2rem 0rem;
@@ -235,6 +235,8 @@ const { title, description, image = "favicon.svg" } = Astro.props;
 		position: sticky;
 		inset: 0 auto auto auto;
 		translate: 0 -3px;
+		z-index: 1;
+		align-content: center;
 	}
 
 	main {

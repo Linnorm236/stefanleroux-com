@@ -1,33 +1,59 @@
 ---
 import LayoutDefault from "./LayoutDefault.astro";
+import Toc from "../blocks/toc.astro";
 
 import { Image } from "astro:assets";
 
-const { frontmatter } = Astro.props;
+const { frontmatter, headings } = Astro.props;
 ---
 
 <LayoutDefault title={frontmatter.title} description={frontmatter.description} image={frontmatter.image?.src}>
-	<article class="blog">
-		<header>
-			<Image src={frontmatter.image} alt={frontmatter.alt} format="avif" layout="constrained" priority />
-			<hgroup>
-				<h1>{frontmatter.title}</h1>
-				<span>
-					Published:
-					<time class="block" datetime={frontmatter.pubDate.toISOString().split("T")[0]}>
-						{frontmatter.pubDate.toISOString().split("T")[0]}
-					</time>
-				</span>
-			</hgroup>
-		</header>
-		<slot />
-	</article>
+	<section>
+		<aside>
+			<Toc headings={headings} />
+		</aside>
+		<article class="blog">
+			<header>
+				<Image src={frontmatter.image} alt={frontmatter.alt} format="avif" layout="constrained" priority />
+				<hgroup>
+					<h1>{frontmatter.title}</h1>
+					<span>
+						Published:
+						<time class="block" datetime={frontmatter.pubDate.toISOString().split("T")[0]}>
+							{frontmatter.pubDate.toISOString().split("T")[0]}
+						</time>
+					</span>
+				</hgroup>
+			</header>
+			<slot />
+		</article>
+	</section>
 </LayoutDefault>
 
 <style>
-	article {
-		inline-size: min(1000px, 95%);
+	section {
+		inline-size: min(1200px, 95%);
 		margin-inline: auto;
+		display: grid;
+		grid: "article aside" auto / 1fr 400px;
+
+		@media (width <= 1100px) {
+			& {
+				grid:
+					"aside" auto
+					"article" auto / 1fr;
+			}
+		}
+	}
+
+	aside {
+		grid-area: aside;
+		inline-size: min(400px, 100%);
+		margin-inline: auto;
+	}
+
+	article {
+		grid-area: article;
 		padding-block: 1em;
 		padding-inline: 1em;
 		background: var(--blockColor);
@@ -50,10 +76,6 @@ const { frontmatter } = Astro.props;
 				display: grid;
 				place-items: start;
 				gap: 2rem;
-			}
-
-			h1 {
-				font-size: var(--fs-6);
 			}
 
 			span:has(time) {
@@ -92,6 +114,7 @@ const { frontmatter } = Astro.props;
 			text-transform: uppercase;
 			line-height: 1.1;
 			text-wrap: balance;
+			scroll-margin-top: calc(1.5lh + 2rem);
 		}
 
 		h1 {

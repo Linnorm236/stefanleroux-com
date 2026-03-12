@@ -5,16 +5,23 @@ import { getCollection, render } from "astro:content";
 
 export async function getStaticPaths() {
 	const posts = await getCollection("blog");
-	return posts.map((post) => ({
+
+	const headings = await Promise.all(
+		posts.map(async (post) => {
+			const data = await render(post);
+			return data.headings;
+		}),
+	);
+	return posts.map((post, index) => ({
 		params: { slug: post.data.slug },
-		props: { post },
+		props: { post, headings: headings[index] },
 	}));
 }
 
-const { post } = Astro.props;
+const { post, headings } = Astro.props;
 const { Content } = await render(post);
 ---
 
-<LayoutBlog frontmatter={post.data}>
+<LayoutBlog frontmatter={post.data} headings={headings}>
 	<Content />
 </LayoutBlog>
