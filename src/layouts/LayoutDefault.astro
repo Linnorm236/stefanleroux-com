@@ -3,6 +3,7 @@ import Meta from "../blocks/meta.astro";
 import Link from "../blocks/link.astro";
 import Contact from "../blocks/contact.astro";
 import Notice from "../blocks/notice.astro";
+import Copyright from "../blocks/copyright.astro";
 
 const { pathname } = Astro.url;
 
@@ -50,13 +51,13 @@ const { title, description, image = "favicon.svg" } = Astro.props;
 				<Contact />
 			</div>
 		</nav>
-		<main>
-			<slot />
-		</main>
 		<header>
 			<Notice />
 		</header>
-		<footer>test</footer>
+		<main>
+			<slot />
+		</main>
+		<footer><Copyright /></footer>
 	</body>
 </html>
 
@@ -71,26 +72,6 @@ const { title, description, image = "favicon.svg" } = Astro.props;
 			"nav main" 1fr
 			"nav foo" auto / minmax(0, 250px) minmax(0, 1fr);
 		gap: 2rem 0rem;
-
-		& > nav {
-			grid-area: nav;
-		}
-
-		& > main {
-			grid-area: main;
-		}
-
-		& > header {
-			grid-area: head;
-		}
-
-		& > footer {
-			grid-area: foo;
-		}
-
-		& > :is(label[for="menu"], input[name="menu"]) {
-			display: none;
-		}
 
 		@media (width <= 900px) {
 			& {
@@ -133,67 +114,71 @@ const { title, description, image = "favicon.svg" } = Astro.props;
 
 			& > label[for="menu"] {
 				display: block;
-				position: fixed;
-				inset: auto 0 0 auto;
-				font-family: icons;
-				z-index: 1;
-
-				& > input#menu {
-					display: block;
-					position: fixed;
-					width: 0;
-					height: 0;
-					opacity: 0;
-				}
-
-				&::before {
-					display: block;
-					padding: var(--paddingGap);
-					background: var(--buttonColor);
-					border: var(--buttonBorder);
-					border-radius: var(--borderRadius);
-					font-size: 3.5rem;
-					line-height: 1;
-					translate: -2rem -2rem;
-					backdrop-filter: blur(5px);
-				}
-
-				&:hover::before,
-				&:focus-within::before {
-					background: oklch(from var(--colorPri) l c h / 0.5);
-					border-color: oklch(from var(--colorPri) l c h / 1);
-				}
-
-				&:has(> input#menu:checked)::before {
-					background: oklch(from var(--colorPri) l c h / 0.8);
-					border-color: oklch(from var(--colorPri) l c h / 1);
-				}
-
-				&:has(> input#menu:checked):focus::before {
-					background: oklch(from var(--colorPri) l c h / 0.2);
-					border-color: oklch(from var(--colorPri) l c h / 0.5);
-				}
-
-				&::after {
-					display: none;
-					content: "";
-					position: fixed;
-					inset: auto 0 0 auto;
-					inline-size: 100vw;
-					block-size: 100vh;
-					z-index: -1;
-				}
-
-				&:has(> input#menu:checked)::after {
-					display: block;
-				}
 			}
+		}
+	}
+
+	label[for="menu"] {
+		display: none;
+		position: fixed;
+		inset: auto 0 0 auto;
+		font-family: icons;
+		z-index: 1;
+
+		& > input#menu {
+			position: fixed;
+			width: 0;
+			height: 0;
+			opacity: 0;
+		}
+
+		&::before {
+			display: block;
+			padding: var(--paddingGap);
+			background: var(--buttonColor);
+			border: var(--buttonBorder);
+			border-radius: var(--borderRadius);
+			font-size: 3.5rem;
+			line-height: 1;
+			translate: -2rem -2rem;
+			backdrop-filter: blur(5px);
+		}
+
+		&:hover::before,
+		&:focus-within::before {
+			background: oklch(from var(--colorPri) l c h / 0.5);
+			border-color: oklch(from var(--colorPri) l c h / 1);
+		}
+
+		&:has(> input#menu:checked)::before {
+			background: oklch(from var(--colorPri) l c h / 0.8);
+			border-color: oklch(from var(--colorPri) l c h / 1);
+		}
+
+		&:has(> input#menu:checked):focus::before {
+			background: oklch(from var(--colorPri) l c h / 0.2);
+			border-color: oklch(from var(--colorPri) l c h / 0.5);
+		}
+
+		&::after {
+			display: none;
+			content: "";
+			position: fixed;
+			inset: auto 0 0 auto;
+			inline-size: 100vw;
+			block-size: 100vh;
+			z-index: -1;
+		}
+
+		&:has(> input#menu:checked)::after {
+			display: block;
 		}
 	}
 
 	nav {
 		--paddingInline: 3rem;
 		--fontSize: 2.5rem;
+		grid-area: nav;
 		position: relative;
 		z-index: 1;
 		isolation: isolate;
@@ -242,9 +227,7 @@ const { title, description, image = "favicon.svg" } = Astro.props;
 
 	header {
 		background: var(--blockColor);
-		border: var(--blockBorder);
-		border-inline: unset;
-		border-block-start: unset;
+		border-block-end: var(--blockBorder);
 		padding-inline: 1em;
 		padding-block: 0.5em;
 		font-size: var(--fs-1);
@@ -252,5 +235,21 @@ const { title, description, image = "favicon.svg" } = Astro.props;
 		position: sticky;
 		inset: 0 auto auto auto;
 		translate: 0 -3px;
+	}
+
+	main {
+		grid-area: main;
+	}
+
+	footer {
+		grid-area: foo;
+		background: var(--blockColor);
+		border: var(--blockBorder);
+		border-inline: unset;
+		border-block-end: unset;
+		padding-inline: 1em;
+		padding-block: 0.5em;
+		font-size: var(--fs-1);
+		text-align: center;
 	}
 </style>
