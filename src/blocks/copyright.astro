@@ -1,0 +1,10 @@
+---
+interface Props {
+	companyName?: string;
+}
+
+const { companyName = "VIVTEC" } = Astro.props;
+const currentYear = new Date().getFullYear();
+---
+
+<p><strong>&copy; {currentYear} {companyName}.</strong> All rights reserved.</p>
