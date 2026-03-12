@@ -128,7 +128,7 @@
 		color: var(--canvasText);
 	}
 
-	:is(h1, h2, h3, h4, h5, h6) {
+	:is(h1, h2, h3, h4, h5, h6, strong) {
 		font-variation-settings: "wght" 700;
 	}
 
@@ -296,5 +296,7 @@
 		inline-size: min(1200px, 90%);
 		margin-inline: auto;
 		content-visibility: auto;
+		display: grid;
+		gap: 1em;
 	}
 }
