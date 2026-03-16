@@ -11,7 +11,7 @@ const filteredHeadings = headings.filter((heading) => heading.depth <= 2);
 ---
 
 <nav>
-	<h2>Table of Contents</h2>
+	<h2>Contents</h2>
 	<ul role="list">
 		{
 			filteredHeadings.map((heading) => (
@@ -41,6 +41,7 @@ const filteredHeadings = headings.filter((heading) => heading.depth <= 2);
 			font-size: var(--fs-0);
 			display: grid;
 			gap: 0.75em;
+			scroll-target-group: auto;
 
 			a::before {
 				font-size: var(--fs-2);
