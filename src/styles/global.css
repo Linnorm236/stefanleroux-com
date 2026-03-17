@@ -155,8 +155,7 @@
 			border-color: oklch(from var(--colorPri) l c h / 0.5);
 		}
 
-		&[aria-current="page"],
-		&:target-current {
+		&:is([aria-current="page"], :target-current) {
 			background: oklch(from var(--colorPri) l c h / 0.5);
 			border-color: oklch(from var(--colorPri) l c h / 1);
 		}
