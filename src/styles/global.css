@@ -301,40 +301,52 @@
 
 @layer util {
 	.text {
-		&.fs-0 {
+		&.s-0 {
 			font-size: var(--fs-0);
 		}
-		&.fs-1 {
+		&.s-1 {
 			font-size: var(--fs-1);
 		}
-		&.fs-2 {
+		&.s-2 {
 			font-size: var(--fs-2);
 		}
-		&.fs-3 {
+		&.s-3 {
 			font-size: var(--fs-3);
 		}
-		&.fs-4 {
+		&.s-4 {
 			font-size: var(--fs-4);
 		}
-		&.fs-5 {
+		&.s-5 {
 			font-size: var(--fs-5);
 		}
-		&.fs-6 {
+		&.s-6 {
 			font-size: var(--fs-6);
 		}
-		&.bold {
+		&.c-pri {
+			color: var(--colorPri);
+		}
+		&.c-suc {
+			color: var(--colorSuc);
+		}
+		&.c-mes {
+			color: var(--colorMes);
+		}
+		&.c-err {
+			color: var(--colorErr);
+		}
+		&.w-bold {
 			font-variation-settings: "wght" 700;
 		}
-		&.italic {
+		&.s-italic {
 			font-style: italic;
 		}
-		&.start {
+		&.a-start {
 			text-align: start;
 		}
-		&.center {
+		&.a-center {
 			text-align: start;
 		}
-		&.end {
+		&.a-end {
 			text-align: end;
 		}
 	}
