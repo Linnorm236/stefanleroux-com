@@ -28,7 +28,22 @@ const { frontmatter, headings } = Astro.props;
 			<div class="contents">
 				<slot />
 			</div>
-			<footer class="author">Author</footer>
+			<footer class="author">
+				<div class="profile">SR</div>
+				<div class="about">
+					<p>
+						I'm a front-end web developer with a passion for custom CSS and performance optimization. My mission is to
+						level the playing field for small businesses and independent entrepreneurs without the overhead of
+						enterprise-level development costs.
+					</p>
+					<hr />
+					<p>
+						<em class="text fs-0">
+							Premium web development shouldn't only be reserved for companies with big budgets.
+						</em>
+					</p>
+				</div>
+			</footer>
 		</article>
 		<aside class="related">Content coming soon</aside>
 	</section>
@@ -171,10 +186,36 @@ const { frontmatter, headings } = Astro.props;
 	}
 
 	.author {
+		font-size: var(--fs-1);
 		grid-area: foo;
 		background: oklch(from var(--blockColor) calc(l - 0.015) c h);
 		border: var(--blockBorder);
 		border-radius: var(--borderRadius);
+		display: flex;
+		flex-flow: wrap;
+		align-items: center;
+		justify-content: center;
+		gap: 1.5em;
+		padding: 1.5em;
+
+		.profile {
+			inline-size: min(100%, 150px);
+			aspect-ratio: 1;
+			object-fit: cover;
+			background: oklch(from #02b787 l c h / 0.3);
+			border-radius: 50%;
+			border: solid 0.15rem oklch(from #02b787 l c h / 1);
+			color: oklch(from #02b787 l c h / 1);
+			font-size: 8rem;
+			text-align: center;
+			align-content: center;
+		}
+
+		.about {
+			flex: 1 1 60%;
+			display: grid;
+			gap: 1rem;
+		}
 	}
 
 	.related {
