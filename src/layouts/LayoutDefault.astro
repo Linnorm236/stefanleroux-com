@@ -79,15 +79,15 @@ const { title, description, image = "favicon.svg" } = Astro.props;
 				grid-template-columns: minmax(0, 0) minmax(0, 1fr);
 				transition: grid-template-columns var(--timing) var(--easing);
 
-				nav {
+				& > nav {
 					content-visibility: hidden;
 					transition-behavior: allow-discrete;
 					transition-delay: 0.5s;
 				}
 
-				main,
-				header,
-				footer {
+				& > main,
+				& > header,
+				& > footer {
 					transition: filter var(--timing) var(--easing);
 					width: 100vw;
 				}
@@ -98,14 +98,14 @@ const { title, description, image = "favicon.svg" } = Astro.props;
 				transition-timing-function: ease-in-out;
 				transition-duration: 0.2s;
 
-				nav {
+				& > nav {
 					content-visibility: visible;
 					transition-delay: 0s;
 				}
 
-				main,
-				header,
-				footer {
+				& > main,
+				& > header,
+				& > footer {
 					filter: blur(2px);
 					transition-timing-function: ease-in-out;
 					transition-duration: 0.2s;
